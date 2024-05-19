@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.clip-hidden {
+  clip-path: ellipse(0 0 at 0% 0%);
+  opacity: 0;
+}
+.clip-visible {
+    clip-path: ellipse(100vw 100vh at 0% 0%);
+}
+
+  
+  #back,
+#forward {
+  @apply absolute z-[5] -translate-y-2/4 text-gray-100 hover:scale-125 cursor-pointer duration-[0.4s] ease-out px-0 py-2.5 border-0 top-2/4;
+}
