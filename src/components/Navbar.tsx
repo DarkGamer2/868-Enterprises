@@ -49,16 +49,19 @@ const NavigationBar = () => {
                 <NavLink to={"/"}>Home</NavLink>
               </li>
               <li className="text-black font-inter tracking-wider  uppercase text-md">
-                <NavLink to={"/food"}>Food</NavLink>
+                <NavLink to={"/householdItems"}>Household Items</NavLink>
               </li>
               <li className="text-black font-inter tracking-wider  uppercase text-md">
-                <NavLink to={"/projects"}>Makeup</NavLink>
+                <NavLink to={"/makeup"}>Makeup</NavLink>
+              </li>
+              <li className="text-black font-inter tracking-wider  uppercase text-md">
+                <NavLink to={"/tech"}>Tech/Electronics</NavLink>
               </li>
               <li className="text-black font-inter tracking-wider uppercase text-md ">
-                <NavLink to={"/contact"}>Clothing</NavLink>
+                <NavLink to={"/clothing"}>Clothing</NavLink>
               </li>
               <li className="text-black font-inter tracking-wider  uppercase text-md">
-                <NavLink to={"/services"}>Medical Supplies</NavLink>
+                <NavLink to={"/medicalsupplies"}>Medical Supplies</NavLink>
               </li>
             </ul>
             <div className="mt-3 space-y-2 lg:hidden md:inline-block">
@@ -75,7 +78,7 @@ const NavigationBar = () => {
                 <DarkModeIcon />
               </button>
               <NavLink
-                to={"/signin"}
+                to={"/login"}
                 className="inline-block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800"
               >
                 <LoginIcon />
@@ -84,7 +87,7 @@ const NavigationBar = () => {
           </div>
           <div className="hidden space-x-2 md:inline-block">
             <NavLink
-              to="*"
+              to={"/cart"}
               className="px-4 py-2 rounded-md shadow hover:bg-gray-600"
             >
               <ShoppingCartIcon />
@@ -96,7 +99,7 @@ const NavigationBar = () => {
               <DarkModeIcon />
             </button>
             <NavLink
-              to="*"
+              to={"/login"}
               className="px-4 py-2 text-blue-600 rounded-md shadow hover:bg-gray-600"
             >
               <LoginIcon />

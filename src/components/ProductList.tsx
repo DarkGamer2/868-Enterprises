@@ -10,7 +10,8 @@ const ProductList = () => {
             <Product
               productName={product.itemName}
               productImage={product.itemImage}
-              productPrice={product.price}
+              productPrice={product.price.toString()}
+              productID={product.id}
             />
           </div>
         );

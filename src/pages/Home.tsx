@@ -5,12 +5,16 @@ import Slider from "../components/Slider"
 
 const Home = () => {
   return (
-    <div>
+  
+     <div className="flex flex-col min-h-screen">
         <Navbar/>
+        <main className="flex-grow">
         <Slider/>
         <ProductList/>
+        </main>
         <Footer/>
     </div>
+
   )
 }
 
