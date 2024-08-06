@@ -4,7 +4,8 @@ export const products=[
         "itemImage":"https://www.stoneycreekhunting.co.nz/image/cache/catalog/product_images/corporate/mens/shirts/Mens_Corporate_Shirt_Long_Sleeve_Float_Navy-875x1000.jpg",
         "price":125.00,
         "id":1,
-        "category":"clothing"
+        "category":"clothing",
+        "inStock":true
     },
     {
         "itemName":"Panadol Extra Strength",
@@ -83,21 +84,21 @@ export const products=[
         "category":"makeup"
     },
     {
-        "itemName":"Apple J",
+        "itemName":"Cough Syrup",
         "itemImage":"https://nativa.co.za/wp-content/uploads/2021/01/LINCough150ml-1.jpg",
          "price":8.00,
         "id":13,
         "category":"medical"
     },
     {
-        "itemName":"Peardrax",
+        "itemName":"Panadeine Forte",
         "itemImage":"https://shadeguide.com.au/wp-content/uploads/2017/06/32-384.jpg",
          "price":7.00,
         "id":14,
         "category":"medical"
     },
     {
-        "itemName":"Smalta",
+        "itemName":"Ramipril Tablets",
         "itemImage":"https://i0.wp.com/www.sciencenews.org/wp-content/uploads/2020/04/042320_ac_covid-ace_feat.jpg?fit=1028%2C579&ssl=1",
          "price":6.00,
         "id":15,

@@ -1,7 +1,7 @@
 import React from "react";
 import { createContext, useState } from "react";
 import { products } from "../Data/products";
-
+import { useContext } from "react";
 export const ShopContext = createContext<{
   cartItems: Record<number, number>;
   addToCart: (itemId: number) => void;
@@ -16,6 +16,7 @@ export const ShopContext = createContext<{
   getTotalCartAmount: () => 0, // Initial value
 });
 
+export const useCart = () => useContext(ShopContext);
 const getDefaultCart = () => {
   const cart: Record<number, number> = {};
   for (let i = 1; i < products.length + 1; i++) {

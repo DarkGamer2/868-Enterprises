@@ -1,16 +1,24 @@
-
-import './App.css'
-import Home from './pages/Home'
+// src/App.tsx
+import React from 'react';
+import { ThemeProvider } from './context/theme/ThemeContext'; // Ensure ThemeProvider is imported
+import Home from './pages/Home';
+import NavigationBar from './components/NavigationBar';
+import './App.css';
+import CartContextProvider from './context/cart-context';
 
 function App() {
-
   return (
-    <div className='flex flex-col min-h-screen'>
-   <main className='flex-grow'>
-   <Home/>
-   </main>
-    </div>
-  )
+    <ThemeProvider>
+     <CartContextProvider>
+     <div className="flex flex-col min-h-screen">
+        <NavigationBar />
+        <main className="flex-grow">
+          <Home />
+        </main>
+      </div>
+     </CartContextProvider>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;

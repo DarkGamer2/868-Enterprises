@@ -1,23 +1,23 @@
+// src/components/Navbar.tsx
+import React from 'react';
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { NavLink } from "react-router-dom";
-import { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginIcon from "@mui/icons-material/Login";
-interface navProps {
-  NavLink: React.ElementType;
-}
+import { Badge } from "@mui/material";
+import { useTheme } from "../context/theme/ThemeContext"; // Use context
+import { useCart } from '../context/cart-context';
 const NavigationBar = () => {
-  const [navbaropen, setNavBarOpen] = useState<boolean>(false);
-  const [darkMode, setDarkMode] = useState<boolean>(false);
+  const [navbaropen, setNavBarOpen] = React.useState<boolean>(false);
+  const { theme, toggleTheme } = useTheme(); // Access theme and toggleTheme from context
+  const { cartItems } = useCart();
 
-  const darkModeSwitch = () => {
-    setDarkMode(true);
-  };
+  const cartItemCount = Object.values(cartItems).reduce((acc, count) => acc + count, 0);
   return (
-    <div className={`w-full shadow ${darkMode ? "dark" : ""}`}>
-      <nav className="">
+    <div className={`w-full shadow ${theme === 'dark' ? 'dark' : 'light'}`}>
+        <nav className="dark:bg-black">
         <div className="justify-between px-4 mx-auto lg:max-w-7xl md:items-center md:flex md:px-8">
           <div>
             <div className="flex items-center justify-between py-3 md:py-5 md:block">
@@ -45,22 +45,22 @@ const NavigationBar = () => {
             }`}
           >
             <ul className="items-center justify-center space-y-8 md:flex md:space-x-6 md:space-y-0">
-              <li className="text-black font-inter tracking-wider  uppercase text-md ">
+              <li className="text-black font-inter tracking-wider  uppercase text-md dark:text-white ">
                 <NavLink to={"/"}>Home</NavLink>
               </li>
-              <li className="text-black font-inter tracking-wider  uppercase text-md">
+              <li className="text-black font-inter tracking-wider  uppercase text-md dark:text-white">
                 <NavLink to={"/householdItems"}>Household Items</NavLink>
               </li>
-              <li className="text-black font-inter tracking-wider  uppercase text-md">
+              <li className="text-black font-inter tracking-wider  uppercase text-md dark:text-white">
                 <NavLink to={"/makeup"}>Makeup</NavLink>
               </li>
-              <li className="text-black font-inter tracking-wider  uppercase text-md">
+              <li className="text-black font-inter tracking-wider  uppercase text-md dark:text-white">
                 <NavLink to={"/tech"}>Tech/Electronics</NavLink>
               </li>
-              <li className="text-black font-inter tracking-wider uppercase text-md ">
+              <li className="text-black font-inter tracking-wider uppercase text-md dark:text-white ">
                 <NavLink to={"/clothing"}>Clothing</NavLink>
               </li>
-              <li className="text-black font-inter tracking-wider  uppercase text-md">
+              <li className="text-black font-inter tracking-wider  uppercase text-md dark:text-white">
                 <NavLink to={"/medicalsupplies"}>Medical Supplies</NavLink>
               </li>
             </ul>
@@ -69,17 +69,19 @@ const NavigationBar = () => {
                 to={"/cart"}
                 className="inline-block px-4 py-2 text-center text-blue-600 rounded-md shadow hover:bg-gray-800"
               >
-                <ShoppingCartIcon />
+               <Badge badgeContent={cartItemCount} color="error">
+                  <ShoppingCartIcon className='dark:text-white'/>
+                </Badge>
               </NavLink>
               <button
-                onClick={darkModeSwitch}
-                className="inline-block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800"
+                onClick={toggleTheme}
+                className="inline-block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800 dark:text-white"
               >
                 <DarkModeIcon />
               </button>
               <NavLink
                 to={"/login"}
-                className="inline-block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800"
+                className="inline-block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800 dark:text-white"
               >
                 <LoginIcon />
               </NavLink>
@@ -90,17 +92,19 @@ const NavigationBar = () => {
               to={"/cart"}
               className="px-4 py-2 rounded-md shadow hover:bg-gray-600"
             >
-              <ShoppingCartIcon />
+             <Badge badgeContent={cartItemCount} color="error">
+                  <ShoppingCartIcon className='dark:text-white'/>
+                </Badge>
             </NavLink>
             <button
-              onClick={darkModeSwitch}
-              className="px-4 py-2 rounded-md shadow hover:bg-gray-600"
+              onClick={toggleTheme}
+              className="px-4 py-2 rounded-md shadow hover:bg-gray-600 dark:text-white"
             >
               <DarkModeIcon />
             </button>
             <NavLink
               to={"/login"}
-              className="px-4 py-2 text-blue-600 rounded-md shadow hover:bg-gray-600"
+              className="px-4 py-2 text-blue-600 rounded-md shadow hover:bg-gray-600 dark:text-white"
             >
               <LoginIcon />
             </NavLink>

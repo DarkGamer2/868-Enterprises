@@ -1,11 +1,13 @@
 import Footer from "../components/Footer"
-import NavigationBar from "../components/Navbar"
+import NavigationBar from "../components/NavigationBar"
 import Product from "../components/Product"
+import { ThemeProvider } from "../context/theme/ThemeContext"
 import { products } from "../Data/products"
 
 const Food = () => {
   return (
-    <div>
+   <ThemeProvider>
+     <div>
       <NavigationBar/>
       <section>
         <h1 className="text-center">Food Items</h1>
@@ -28,6 +30,7 @@ const Food = () => {
       </section>
       <Footer/>
     </div>
+   </ThemeProvider>
   )
 }
 
