@@ -1,23 +1,28 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React from "react";
+import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from './pages/Home.tsx';
-import './index.css'
-import Makeup from './pages/Makeup.tsx';
-import Clothing from './pages/Clothing.tsx';
-import MedicalSupplies from './pages/MedicalSupplies.tsx';
-import HouseholdItems from './pages/HouseholdItems.tsx';
-import Tech from './pages/Tech.tsx';
-import Login from './pages/Login.tsx';
-import CartContextProvider from './context/cart-context.tsx';
-import Cart from './pages/Cart.tsx';
-import ProductDetails from './pages/ProductDetails.tsx';
-import { products } from './Data/products.ts';
-import CreateAccount from './pages/CreateAccount.tsx';
-import Logout from './components/Logout.tsx';
-import { ThemeProvider } from './context/theme/ThemeContext.tsx';
+import Home from "./pages/Home.tsx";
+import "./index.css";
+import Makeup from "./pages/Makeup.tsx";
+import Clothing from "./pages/Clothing.tsx";
+import MedicalSupplies from "./pages/MedicalSupplies.tsx";
+import HouseholdItems from "./pages/HouseholdItems.tsx";
+import Tech from "./pages/Tech.tsx";
+import Login from "./pages/Login.tsx";
+import CartContextProvider from "./context/cart-context.tsx";
+import Cart from "./pages/Cart.tsx";
+import ProductDetails from "./pages/ProductDetails.tsx";
+import { products } from "./Data/products.ts";
+import CreateAccount from "./pages/CreateAccount.tsx";
+import Logout from "./components/Logout.tsx";
+import { ThemeProvider } from "./context/theme/ThemeContext.tsx";
+import Error from "./components/Error.tsx";
+import Dashboard from "./pages/userDashboard/Dashboard.tsx";
+import { AuthProvider } from "./context/auth-context.tsx";
+import AddProduct from "./pages/userDashboard/AddProduct.tsx";
+import Contact from "./pages/Contact.tsx";
 
-interface ProductProps{
+interface ProductProps {
   productName: string;
   productPrice: number;
   productDescription: string;
@@ -25,13 +30,13 @@ interface ProductProps{
   inStock: boolean;
 }
 
-const product:ProductProps = products.map((product) => {
+const product: ProductProps = products.map((product) => {
   return {
     productName: product.itemName,
     productPrice: product.price,
     productDescription: product.category,
-    productImage:product.itemImage,
-    inStock:product.inStock
+    productImage: product.itemImage,
+    inStock: product.inStock,
   };
 })[0]; // Assuming there's at least one product in the array
 
@@ -41,53 +46,73 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path:"householdItems",
-    element:<HouseholdItems/>
+    path: "householdItems",
+    element: <HouseholdItems />,
   },
   {
-    path:"makeup",
-    element:<Makeup/>
+    path: "makeup",
+    element: <Makeup />,
   },
   {
-    path:"clothing",
-    element:<Clothing/>
+    path: "clothing",
+    element: <Clothing />,
   },
   {
-    path:"medicalsupplies",
-    element:<MedicalSupplies/>
+    path: "medicalsupplies",
+    element: <MedicalSupplies />,
   },
   {
-    path:"tech",
-    element:<Tech/>
+    path: "tech",
+    element: <Tech />,
   },
   {
-    path:"login",
-    element:<Login/>
+    path: "login",
+    element: <Login />,
   },
   {
-    path:"cart",
-    element:<Cart/>
+    path: "cart",
+    element: <Cart />,
+    
   },
   {
-    path:":id",
-    element:<ProductDetails productName={product.productName} productPrice={product.productPrice} productDescription={product.productDescription} productImage={product.productImage} inStock={product.inStock}/>
+    path: ":id",
+    element: (
+      <ProductDetails
+        productName={product.productName}
+        productPrice={product.productPrice}
+        productDescription={product.productDescription}
+        productImage={product.productImage}
+        inStock={product.inStock}
+      />
+    ),
   },
   {
-    path:"logout",
-    element:<Logout/>
+    path: "logout",
+    element: <Logout />,
   },
-{
-  path:"/createAccount",
-  element:<CreateAccount/>
-}
+  {
+    path: "/createAccount",
+    element: <CreateAccount />,
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+   
+  },
+  {
+    path:"/addProduct",
+    element:<AddProduct/>
+  },
+  {
+    path:"/contact",
+    element:<Contact/>
+  }
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-   <ThemeProvider>
-   <CartContextProvider>
-      <RouterProvider router={router}/>
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <ThemeProvider>
+    <CartContextProvider>
+      <RouterProvider router={router} />
     </CartContextProvider>
-   </ThemeProvider>
-  </React.StrictMode>,
-)
+  </ThemeProvider>
+);

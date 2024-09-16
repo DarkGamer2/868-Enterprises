@@ -6,6 +6,7 @@ import Image5 from "../assets/images/index-online-65a1812dc7346.jpg";
 import { useState } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 const Slider = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const [prev, setPrev] = useState(0);
@@ -14,7 +15,6 @@ const Slider = () => {
       image: Image1,
       name: "clothing 1",
     },
-
     { image: Image2, name: "clothing 2" },
     {
       image: Image3,
@@ -30,7 +30,7 @@ const Slider = () => {
     },
   ];
 
-  const Slide = (type:string) => {
+  const Slide = (type: string) => {
     let local;
     if (type === "next") {
       local = activeSlide + 1;
@@ -40,38 +40,47 @@ const Slider = () => {
     }
     if (type === "prev") {
       local = activeSlide - 1;
-      setActiveSlide(local);
+      setActiveSlide(local < 0 ? images.length - 1 : local);
     }
-    setPrev(activeSlide)
+    setPrev(activeSlide);
   };
+
   return (
-    <div>
+    <div className="relative">
       <div className="rounded-xl relative shadow-lg overflow-hidden">
-        <div className="w-auto h-[400px] relative">
+        <div className="w-full h-[250px] sm:h-[350px] md:h-[400px] relative">
           {images.map((image, index) => {
             return (
               <img
                 src={image.image}
                 key={index}
                 alt="slider image"
-                className={`h-full w-full absolute object-cover inset-0 duration-[2s] ease-out transition-[clip-path] ${
+                className={`h-full w-full absolute object-cover inset-0 duration-[2s] ease-out transition-[clip-path, opacity] ${
                   index === activeSlide
-                    ? "clip-visible"
+                    ? "clip-visible opacity-100"
                     : "clip-hidden opacity-0"
                 }`}
               />
             );
           })}
-          <img src={images[prev].image} alt="previmg" className="w-full h-full object-cover" />
+          <img
+            src={images[prev].image}
+            alt="previmg"
+            className="w-full h-full object-cover"
+          />
         </div>
-        <div>
-          <button onClick={() => Slide("prev")} id="back">
+        <div className="absolute inset-0 flex justify-between items-center p-4">
+          <button
+            onClick={() => Slide("prev")}
+            id="back"
+            className="bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-opacity"
+          >
             <ArrowBackIosNewIcon />
           </button>
           <button
             onClick={() => Slide("next")}
             id="forward"
-            className="right-0"
+            className="bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-opacity"
           >
             <ArrowForwardIosIcon />
           </button>

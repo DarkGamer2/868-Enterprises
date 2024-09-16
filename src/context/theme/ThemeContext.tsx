@@ -1,5 +1,5 @@
 // src/context/theme/ThemeContext.tsx
-import React, { createContext, useState, ReactNode, useContext } from 'react';
+import React, { createContext, useState, ReactNode, useContext, useEffect } from 'react';
 
 interface ThemeContextType {
   theme: string;
@@ -9,10 +9,17 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<string>("light");
+  // Retrieve the theme from local storage or default to 'light'
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  const [theme, setTheme] = useState<string>(savedTheme);
+
+  useEffect(() => {
+    // Save the current theme to local storage whenever it changes
+    localStorage.setItem('theme', theme);
+  }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((current) => (current === "light" ? "dark" : "light"));
+    setTheme((current) => (current === 'light' ? 'dark' : 'light'));
   };
 
   return (
@@ -25,7 +32,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 export const useTheme = () => {
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error('useTheme must be used within a ThemeProvider');
   }
   return context;
 };

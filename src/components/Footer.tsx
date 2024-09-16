@@ -6,7 +6,7 @@ import XIcon from '@mui/icons-material/X';
 const Footer = () => {
   return (
     <div className="bg-blue-800 mt-2 p-4">
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <div>
           <h1 className="text-center font-inter text-white text-xl">Location</h1>
           <p className="text-white text-center font-lato">#2 California Street, Chaguanas</p>
@@ -21,7 +21,7 @@ const Footer = () => {
           <h1 className="text-center text-white font-inter text-xl">Contact Information</h1>
           <p className="text-white text-center font-lato">Email: 868@example.com</p>
           <p className="text-white text-center font-lato">Phone: +1 (868) 555-6241</p>
-          <div className='flex justify-center'>
+          <div className='flex justify-center mt-2'>
             <InstagramIcon className='text-pink-500 mx-2'/>
             <WhatsAppIcon className='text-green-500 mx-2'/>
             <FacebookIcon className='text-blue-500 mx-2'/>

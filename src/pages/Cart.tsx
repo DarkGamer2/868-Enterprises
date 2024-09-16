@@ -7,11 +7,21 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useTheme } from "../context/theme/ThemeContext";
 
+
 const Cart = () => {
   const navigate = useNavigate();
   const { cartItems, getTotalCartAmount } = useContext(ShopContext);
   const totalAmount = getTotalCartAmount();
   const { theme } = useTheme();
+   // Get the user's login status
+
+  // const handleCheckout = () => {
+  //   if (isLoggedIn) {
+  //     navigate("/checkout"); // Replace with your Stripe checkout page route
+  //   } else {
+  //     navigate("/login");
+  //   }
+  // };
 
   return (
     <div
@@ -66,7 +76,10 @@ const Cart = () => {
               >
                 Continue Shopping
               </button>
-              <button className="bg-green-600 rounded-md px-4 py-2 text-white">
+              <button
+               
+                className="bg-green-600 rounded-md px-4 py-2 text-white"
+              >
                 Proceed To Checkout
               </button>
             </div>
