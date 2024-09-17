@@ -6,22 +6,31 @@ import NavigationBar from "../components/NavigationBar";
 import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useTheme } from "../context/theme/ThemeContext";
-
+import axios from "axios";
 
 const Cart = () => {
   const navigate = useNavigate();
   const { cartItems, getTotalCartAmount } = useContext(ShopContext);
   const totalAmount = getTotalCartAmount();
   const { theme } = useTheme();
-   // Get the user's login status
 
-  // const handleCheckout = () => {
-  //   if (isLoggedIn) {
-  //     navigate("/checkout"); // Replace with your Stripe checkout page route
-  //   } else {
-  //     navigate("/login");
-  //   }
-  // };
+  const handleCheckout = async () => {
+    const orderDetails = {
+      items: cartItems,
+      totalAmount: totalAmount,
+    };
+
+    try {
+      const response = await axios.post("http://localhost:4900/api/checkout", orderDetails);
+      if (response.status === 200) {
+        navigate("/confirmation");
+      } else {
+        console.error("Failed to process order");
+      }
+    } catch (error) {
+      console.error("Error during checkout:", error);
+    }
+  };
 
   return (
     <div
@@ -77,7 +86,7 @@ const Cart = () => {
                 Continue Shopping
               </button>
               <button
-               
+                onClick={handleCheckout}
                 className="bg-green-600 rounded-md px-4 py-2 text-white"
               >
                 Proceed To Checkout

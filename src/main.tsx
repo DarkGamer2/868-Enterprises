@@ -21,7 +21,8 @@ import Dashboard from "./pages/userDashboard/Dashboard.tsx";
 import { AuthProvider } from "./context/auth-context.tsx";
 import AddProduct from "./pages/userDashboard/AddProduct.tsx";
 import Contact from "./pages/Contact.tsx";
-
+import Orders from "./pages/userDashboard/Orders.tsx";
+import Confirmation from "./pages/Confirmation.tsx";
 interface ProductProps {
   productName: string;
   productPrice: number;
@@ -106,6 +107,13 @@ const router = createBrowserRouter([
   {
     path:"/contact",
     element:<Contact/>
+  },{
+    path:"/orders",
+    element:<Orders/>
+  },
+  {
+    path:"/confirmation",
+    element:<Confirmation/>
   }
 ]);
 

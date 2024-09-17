@@ -15,7 +15,7 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <div className={`flex flex-col h-screen bg-gray-100 ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
+    <div className={`flex flex-col h-screen bg-gray-100 ${theme === 'dark' ? 'dark' : 'light'}`}>
       <NavigationBar /> {/* Add the navigation bar at the top */}
       <div className="flex flex-1">
         <Sidebar />
