@@ -15,7 +15,7 @@ const MedicalSupplies = () => {
    <div className="grid grid-cols-3">
     {products.map((product)=>{
       if(product.category==="medical"){
-        return <Product productName={product.itemName} productImage={product.itemImage} productPrice={product.price.toString()} productID={product.id}/>
+        return <Product productName={product.itemName} productImage={product.itemImage} productPrice={product.price.toString()} productID={product.id} key={product.id}/>
       }
     })}
    </div>
