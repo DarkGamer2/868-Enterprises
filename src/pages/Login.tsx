@@ -1,4 +1,3 @@
-// src/pages/Login.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -6,6 +5,7 @@ import NavigationBar from "../components/NavigationBar";
 import Footer from "../components/Footer";
 import { NavLink } from "react-router-dom";
 import { useTheme } from "../context/theme/ThemeContext"; // Import the useTheme hook
+import { useUser } from "../context/user-context"; // Import the useUser hook
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,20 +14,24 @@ const Login = () => {
   const [error, setError] = useState("");
 
   const { theme } = useTheme(); // Get the current theme
+  const { setUser } = useUser(); // Get the setUser function from the user context
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      console.log("Sending login request with:", { email, password });
       const response = await axios.post(
         "http://localhost:4900/api/users/login",
         { email, password },
         {
           withCredentials: true,
-          headers: { 'Content-Type': 'application/json' }, // Adjusted header for JSON
+          headers: { 'Content-Type': 'application/json' },
         }
       );
 
+      console.log("Login response:", response);
       if (response.status === 200) {
+        setUser({ username: response.data.username }); // Store the username in the context
         navigate("/");
       }
     } catch (err) {

@@ -1,23 +1,29 @@
-import React from "react";
-import { createContext, useState } from "react";
+import React, { createContext, useState, useContext, useEffect } from "react";
 import { products } from "../Data/products";
-import { useContext } from "react";
-export const ShopContext = createContext<{
+
+// Define the shape of the context
+interface ShopContextType {
   cartItems: Record<number, number>;
   addToCart: (itemId: number) => void;
   removeFromCart: (itemId: number) => void;
   updateCartItemCount: (newAmount: number, itemId: number) => void;
   getTotalCartAmount: () => number;
-}>({
+}
+
+// Create the context with default values
+export const ShopContext = createContext<ShopContextType>({
   cartItems: {},
   addToCart: () => {},
   removeFromCart: () => {},
   updateCartItemCount: () => {},
-  getTotalCartAmount: () => 0, // Initial value
+  getTotalCartAmount: () => 0,
 });
 
+// Custom hook to use the cart context
 export const useCart = () => useContext(ShopContext);
-const getDefaultCart = () => {
+
+// Function to get the default cart structure
+const getDefaultCart = (): Record<number, number> => {
   const cart: Record<number, number> = {};
   for (let i = 1; i < products.length + 1; i++) {
     cart[i] = 0;
@@ -25,10 +31,18 @@ const getDefaultCart = () => {
   return cart;
 };
 
+// Cart context provider component
 const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
-  const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [cartItems, setCartItems] = useState<Record<number, number>>(() => {
+    const savedCartItems = localStorage.getItem('cartItems');
+    return savedCartItems ? JSON.parse(savedCartItems) : getDefaultCart();
+  });
 
-  const getTotalCartAmount = () => {
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const getTotalCartAmount = (): number => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
@@ -41,19 +55,19 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     return totalAmount;
   };
 
-  const addToCart = (itemId: number) => {
+  const addToCart = (itemId: number): void => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
   };
 
-  const removeFromCart = (itemId: number) => {
+  const removeFromCart = (itemId: number): void => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
 
-  const updateCartItemCount = (newAmount: number, itemId: number) => {
+  const updateCartItemCount = (newAmount: number, itemId: number): void => {
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
   };
 
-  const contextValue = { cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount };
+  const contextValue: ShopContextType = { cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount };
 
   console.log(cartItems);
   return (

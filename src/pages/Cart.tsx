@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { useTheme } from "../context/theme/ThemeContext";
 import axios from "axios";
+import { loadStripe } from "@stripe/stripe-js";
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -15,15 +16,23 @@ const Cart = () => {
   const { theme } = useTheme();
 
   const handleCheckout = async () => {
+    const stripe = await loadStripe("pk_test_51LvjnYHW5YE4EViBNjQImvpkVx37UgqZ8vMewcEGR49N2TStdkPptMhaSzLAbApIwLZTHau3qgAChfFI1sf207Zi00APfXLcEu");
     const orderDetails = {
       items: cartItems,
       totalAmount: totalAmount,
     };
-
+    console.log("Order Details", orderDetails);
     try {
       const response = await axios.post("http://localhost:4900/api/checkout", orderDetails);
       if (response.status === 200) {
-        navigate("/confirmation");
+        const session = response.data;
+        const result = await stripe?.redirectToCheckout({
+          sessionId: session.id,
+        });
+
+        if (result?.error) {
+          console.error("Stripe error:", result.error.message);
+        }
       } else {
         console.error("Failed to process order");
       }
@@ -70,18 +79,18 @@ const Cart = () => {
           })}
         </div>
         {totalAmount > 0 ? (
-          <div className="flex justify-between items-center mt-4">
+          <div className="flex flex-col md:flex-row justify-between items-center mt-4">
             <div
-              className={`text-xl font-bold ${
+              className={`text-xl font-bold mb-4 md:mb-0 ${
                 theme === "dark" ? "text-white" : "text-black"
               }`}
             >
               Sub Total: ${totalAmount.toFixed(2)}
             </div>
-            <div>
+            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
               <button
                 onClick={() => navigate("/")}
-                className="bg-blue-600 rounded-md px-4 py-2 text-white mx-2"
+                className="bg-blue-600 rounded-md px-4 py-2 text-white"
               >
                 Continue Shopping
               </button>
