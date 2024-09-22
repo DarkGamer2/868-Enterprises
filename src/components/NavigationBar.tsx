@@ -5,6 +5,8 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import LoginIcon from "@mui/icons-material/Login";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import LogoutIcon from "@mui/icons-material/Logout";
 import { Badge } from "@mui/material";
 import { useTheme } from "../context/theme/ThemeContext";
 import { useCart } from "../context/cart-context";
@@ -14,7 +16,7 @@ import Logo from "../assets/images/E34F60E7-1962-441B-B5D8-CFA7E493FBB9.jpg";
 const NavigationBar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState<boolean>(false);
   const { theme, toggleTheme } = useTheme();
-  const { cartItems } = useCart();
+  const { cartItems, setCartItems } = useCart(); // Get setCartItems function from the cart context
   const { user, setUser } = useUser(); // Get the user and setUser function from the user context
 
   const cartItemCount = Object.values(cartItems).reduce(
@@ -24,6 +26,7 @@ const NavigationBar = () => {
 
   const handleLogout = () => {
     setUser(null); // Clear the user information on logout
+    setCartItems({}); // Clear the cart items on logout
     // Add any additional logout logic here (e.g., clearing cookies, redirecting)
   };
 
@@ -49,8 +52,13 @@ const NavigationBar = () => {
 
           {/* Links */}
           <div className="hidden md:flex md:space-x-8 flex-grow justify-center">
+            <NavLink
+              to="/"
+              className="text-black dark:text-white font-inter tracking-wider uppercase text-md whitespace-nowrap hover:underline"
+            >
+              Home
+            </NavLink>
             {[
-              "Home",
               "Household Items",
               "Makeup",
               "Clothing",
@@ -85,14 +93,18 @@ const NavigationBar = () => {
             </button>
             {user ? (
               <div className="flex items-center space-x-2">
-                <span className="px-4 py-2 rounded-md shadow dark:text-white whitespace-nowrap">
-                  Hello, {user.username}
-                </span>
+                <NavLink
+                  to={"/dashboard"}
+                  className="flex items-center space-x-1 px-4 py-2 rounded-md shadow hover:bg-gray-600 dark:text-white"
+                >
+                  <AccountCircleIcon />
+                  <span>{user.username}</span>
+                </NavLink>
                 <button
                   onClick={handleLogout}
                   className="px-4 py-2 rounded-md shadow hover:bg-gray-600 dark:text-white"
                 >
-                  Logout
+                  <LogoutIcon />
                 </button>
               </div>
             ) : (
@@ -123,8 +135,13 @@ const NavigationBar = () => {
           } md:opacity-100 md:max-h-full md:hidden`}
         >
           <ul className="flex flex-col items-center space-y-4 py-4">
+            <NavLink
+              to="/"
+              className="text-black dark:text-white font-inter tracking-wider uppercase text-md whitespace-nowrap hover:underline"
+            >
+              Home
+            </NavLink>
             {[
-              "Home",
               "Household Items",
               "Makeup",
               "Clothing",
@@ -155,14 +172,18 @@ const NavigationBar = () => {
             </button>
             {user ? (
               <>
-                <span className="block px-4 py-2 text-center rounded-md shadow dark:text-white">
-                  Hello, {user.username}
-                </span>
+                <NavLink
+                  to={"/dashboard"}
+                  className="flex items-center space-x-1 px-4 py-2 rounded-md shadow hover:bg-gray-800 dark:text-white"
+                >
+                  <AccountCircleIcon />
+                  <span>{user.username}</span>
+                </NavLink>
                 <button
                   onClick={handleLogout}
                   className="block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800 dark:text-white"
                 >
-                  Logout
+                  <LogoutIcon />
                 </button>
               </>
             ) : (

@@ -17,7 +17,6 @@ import Logout from "./components/Logout.tsx";
 import { ThemeProvider } from "./context/theme/ThemeContext.tsx";
 import Error from "./components/Error.tsx";
 import Dashboard from "./pages/userDashboard/Dashboard.tsx";
-import { AuthProvider } from "./context/auth-context.tsx";
 import AddProduct from "./pages/userDashboard/AddProduct.tsx";
 import Contact from "./pages/Contact.tsx";
 import Orders from "./pages/userDashboard/Orders.tsx";
@@ -25,7 +24,7 @@ import Confirmation from "./pages/Confirmation.tsx";
 import CheckoutPage from "./pages/Checkout.tsx";
 import Cancel from "./pages/Cancel.tsx";
 import { UserProvider } from "./context/user-context.tsx";
-import NotFound from "./pages/NotFound.tsx"
+import NotFound from "./pages/NotFound.tsx";
 
 interface ProductProps {
   productName: string;
@@ -49,37 +48,90 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <Error />,
   },
   {
     path: "householdItems",
     element: <HouseholdItems />,
+    errorElement: <Error />,
   },
   {
     path: "makeup",
     element: <Makeup />,
+    errorElement: <Error />,
   },
   {
     path: "clothing",
     element: <Clothing />,
+    errorElement: <Error />,
   },
   {
     path: "medicalsupplies",
     element: <MedicalSupplies />,
+    errorElement: <Error />,
   },
   {
     path: "tech",
     element: <Tech />,
+    errorElement: <Error />,
   },
   {
     path: "login",
     element: <Login />,
+    errorElement: <Error />,
   },
   {
     path: "cart",
     element: <Cart />,
+    errorElement: <Error />,
   },
   {
-    path: ":id",
+    path: "logout",
+    element: <Logout />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/createAccount",
+    element: <CreateAccount />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/addProduct",
+    element: <AddProduct />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/contact",
+    element: <Contact />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/orders",
+    element: <Orders />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/success",
+    element: <Confirmation />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/checkout",
+    element: <CheckoutPage />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/cancel",
+    element: <Cancel />,
+    errorElement: <Error />,
+  },
+  {
+    path: "*", // Wildcard route to catch all undefined paths
+    element: <NotFound />,
+    errorElement: <Error />,
+  },
+  {
+    path: "product/:id", // Change the dynamic route to be more specific
     element: (
       <ProductDetails
         productName={product.productName}
@@ -89,47 +141,12 @@ const router = createBrowserRouter([
         inStock={product.inStock}
       />
     ),
+    errorElement: <Error />,
   },
   {
-    path: "logout",
-    element: <Logout />,
-  },
-  {
-    path: "/createAccount",
-    element: <CreateAccount />,
-  },
-  {
-    path: "/dashboard",
+    path: "dashboard",
     element: <Dashboard />,
-  },
-  {
-    path: "/addProduct",
-    element: <AddProduct />,
-  },
-  {
-    path: "/contact",
-    element: <Contact />,
-  },
-  {
-    path: "/orders",
-    element: <Orders />,
-  },
-  {
-    path: "/success",
-    element: <Confirmation />,
-  },
-  {
-    path: "/checkout",
-    element: <CheckoutPage />,
-  },
-  {
-    path: "/cancel",
-    element: <Cancel />,
-  },
-  {
-    path: "*", // Wildcard route to catch all undefined paths
-    element: <NotFound />,
-  },
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

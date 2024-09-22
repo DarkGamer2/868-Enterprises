@@ -1,5 +1,5 @@
 import { products } from "../Data/products";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { ShopContext } from "../context/cart-context";
 import CartItem from "../components/CartItem";
 import NavigationBar from "../components/NavigationBar";
@@ -8,6 +8,7 @@ import Footer from "../components/Footer";
 import { useTheme } from "../context/theme/ThemeContext";
 import axios from "axios";
 import { loadStripe } from "@stripe/stripe-js";
+import { useUser } from "../context/user-context"; // Import the user context
 
 // Define the product type
 interface Product {
@@ -19,11 +20,24 @@ interface Product {
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { cartItems, getTotalCartAmount }: { cartItems: { [key: string]: number }, getTotalCartAmount: () => number } = useContext(ShopContext);
+  const { cartItems, getTotalCartAmount, setCartItems }: { cartItems: { [key: string]: number }, getTotalCartAmount: () => number, setCartItems: React.Dispatch<React.SetStateAction<Record<number, number>>> } = useContext(ShopContext);
   const totalAmount = getTotalCartAmount();
   const { theme } = useTheme();
+  const { user } = useUser(); // Get the user from the user context
+
+  useEffect(() => {
+    if (!user) {
+      setCartItems({}); // Clear the cart if the user is not authenticated
+    }
+  }, [user, setCartItems]);
 
   const handleCheckout = async () => {
+    if (!user) {
+      // If the user is not logged in, redirect to the login page
+      navigate("/login");
+      return;
+    }
+
     const stripe = await loadStripe("pk_test_51LvjnYHW5YE4EViBNjQImvpkVx37UgqZ8vMewcEGR49N2TStdkPptMhaSzLAbApIwLZTHau3qgAChfFI1sf207Zi00APfXLcEu");
 
     // Create an array of products with necessary data, using correct type checks

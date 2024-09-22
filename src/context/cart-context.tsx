@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { products } from "../Data/products";
+import { useUser } from "../context/user-context"; // Import the user context
 
 // Define the shape of the context
 interface ShopContextType {
@@ -8,6 +9,7 @@ interface ShopContextType {
   removeFromCart: (itemId: number) => void;
   updateCartItemCount: (newAmount: number, itemId: number) => void;
   getTotalCartAmount: () => number;
+  setCartItems: React.Dispatch<React.SetStateAction<Record<number, number>>>; // Add setCartItems to the context type
 }
 
 // Create the context with default values
@@ -17,6 +19,7 @@ export const ShopContext = createContext<ShopContextType>({
   removeFromCart: () => {},
   updateCartItemCount: () => {},
   getTotalCartAmount: () => 0,
+  setCartItems: () => {}, // Provide a default no-op function
 });
 
 // Custom hook to use the cart context
@@ -38,9 +41,14 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     return savedCartItems ? JSON.parse(savedCartItems) : getDefaultCart();
   });
 
+  const { user } = useUser(); // Get the user from the user context
+
   useEffect(() => {
+    if (!user) {
+      setCartItems(getDefaultCart()); // Clear the cart if the user is not authenticated
+    }
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+  }, [cartItems, user]);
 
   const getTotalCartAmount = (): number => {
     let totalAmount = 0;
@@ -56,6 +64,10 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
   };
 
   const addToCart = (itemId: number): void => {
+    if (!user) {
+      alert("You must be logged in to add items to the cart.");
+      return;
+    }
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
   };
 
@@ -67,7 +79,14 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
   };
 
-  const contextValue: ShopContextType = { cartItems, addToCart, removeFromCart, updateCartItemCount, getTotalCartAmount };
+  const contextValue: ShopContextType = { 
+    cartItems, 
+    addToCart, 
+    removeFromCart, 
+    updateCartItemCount, 
+    getTotalCartAmount, 
+    setCartItems // Include setCartItems in the context value
+  };
 
   console.log(cartItems);
   return (

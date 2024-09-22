@@ -3,7 +3,7 @@ import Image2 from "../assets/images/SNY04089.jpg_edit.width-1440_05001m7uKQ0crR
 import Image3 from "../assets/images/clothingrack.0.jpg";
 import Image4 from "../assets/images/enjoy-retro-clothing-truro-20-scaled.jpg";
 import Image5 from "../assets/images/index-online-65a1812dc7346.jpg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
@@ -34,9 +34,7 @@ const Slider = () => {
     let local;
     if (type === "next") {
       local = activeSlide + 1;
-      images.length - 1 < local
-        ? setActiveSlide(local / images.length - 1)
-        : setActiveSlide(local);
+      setActiveSlide(local >= images.length ? 0 : local);
     }
     if (type === "prev") {
       local = activeSlide - 1;
@@ -44,6 +42,14 @@ const Slider = () => {
     }
     setPrev(activeSlide);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      Slide("next");
+    }, 10000); // Change slide every 3 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [activeSlide]);
 
   return (
     <div className="relative">
@@ -74,6 +80,7 @@ const Slider = () => {
             onClick={() => Slide("prev")}
             id="back"
             className="bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-opacity"
+            style={{ position: "absolute", left: "10px" }}
           >
             <ArrowBackIosNewIcon />
           </button>
@@ -81,6 +88,7 @@ const Slider = () => {
             onClick={() => Slide("next")}
             id="forward"
             className="bg-white bg-opacity-50 rounded-full p-2 hover:bg-opacity-75 transition-opacity"
+            style={{ position: "absolute", right: "10px" }}
           >
             <ArrowForwardIosIcon />
           </button>

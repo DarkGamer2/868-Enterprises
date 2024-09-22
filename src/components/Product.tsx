@@ -32,7 +32,7 @@ const Product: React.FC<ProductProps> = ({
         <p className="text-sm text-gray-600 dark:text-white">$ {productPrice}</p>
         <div>
           {" "}
-          <Link to={`/${productID}`} className="text-blue-600">
+          <Link to={`product/${productID}`} className="text-blue-600">
             View Details
           </Link>
         </div>
