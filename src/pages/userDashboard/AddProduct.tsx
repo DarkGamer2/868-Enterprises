@@ -14,7 +14,7 @@ const AddProduct = () => {
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const API_URL = "http://localhost:4900";
+    const API_URL = "https://868-enterprises-api-production.up.railway.app";
     try {
       let imageUrl = "";
       if (productImage) {

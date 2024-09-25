@@ -12,7 +12,7 @@ const ContactForm = () => {
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:4900/api/request/quote", {
+      .post("https://868-enterprises-api-production.up.railway.app/api/request/quote", {
         firstName,
         lastName,
         email,

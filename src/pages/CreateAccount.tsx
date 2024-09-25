@@ -18,7 +18,7 @@ const CreateAccount = () => {
     setCreatingAccount(true);
     
     try {
-      await axios.post("http://localhost:4900/api/users/register", {
+      await axios.post("https://868-enterprises-api-production.up.railway.app/api/users/register", {
         fullName,
         email,
         username,

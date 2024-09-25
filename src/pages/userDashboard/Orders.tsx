@@ -12,7 +12,7 @@ interface Order {
 }
 const Orders = () => {
   const [orders, setOrders] = useState([]);
-  const API_URL = "http://localhost:4900";
+  const API_URL = "https://868-enterprises-api-production.up.railway.app";
   const fetchOrders = async () => {
     await axios
       .get(`${API_URL}/api/users/:username/orders`)

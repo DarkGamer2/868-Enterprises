@@ -67,7 +67,7 @@ const Cart = () => {
     console.log("Order Details", orderDetails);
 
     try {
-      const response = await axios.post("http://localhost:4900/api/checkout", orderDetails);
+      const response = await axios.post("https://868-enterprises-api-production.up.railway.app/api/checkout", orderDetails);
       if (response.status === 200) {
         const session = response.data;
         const result = await stripe?.redirectToCheckout({

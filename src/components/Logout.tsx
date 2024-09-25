@@ -9,7 +9,7 @@ const Logout = () => {
     const logout = async () => {
       try {
         await axios.post(
-          "http://localhost:4900/api/users/logout",
+          "https://868-enterprises-api-production.up.railway.app/api/users/logout",
           {},
           { withCredentials: true }
         );
