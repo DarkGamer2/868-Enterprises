@@ -19,7 +19,8 @@ const Food = () => {
                 key={product.id}
                 productName={product.itemName}
                 productImage={product.itemImage}
-                productPrice={product.price}
+                productPrice={product.price.toString()}
+                productID={product.id}
               />
             );
           } else {

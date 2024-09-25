@@ -5,7 +5,6 @@ import TopSellingProducts from '../../components/TopSellingProducts';
 import SalesStatistics from '../../components/SaleStatistics';
 import UniqueVisitors from '../../components/UniqueVisitors';
 import { useTheme } from '../../context/theme/ThemeContext';
-import axios from 'axios';
 const Dashboard: React.FC = () => {
     const {theme}=useTheme();
   const [loaded, setLoaded] = useState(false);
