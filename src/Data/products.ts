@@ -120,11 +120,11 @@ export const products=[
                 "styleName":"White & Gold Marble"
             },
             "style2":{
-                "productImage":"/src/assets/products/Images/53AC5683-4475-401E-94DD-CF193BB324F0.JPG",
-                "styleName":"Black & Gold Marble"
+                "productImage":"/src/assets/products/Images/547A1050-7F48-4750-AAF2-503B79E93711.JPG",
+                "styleName":"Black & White Marble"
             },
             },
-            "productDescription2":"Delivery via ttpost (online payment required) or selected pick up Locations.",
+            "productDescription2":"Delivery via TTPost (online payment required) or selected pick up Locations.",
             "price":150.00,
             "id":16,
             "category":"household"
