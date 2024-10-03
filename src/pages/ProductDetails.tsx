@@ -4,6 +4,7 @@ import Gallery from '../components/Gallery';  // Import the Gallery component
 import StyleSwitcher from '../components/StyleSwitcher'; // Import the StyleSwitcher component
 import { products } from '../Data/products';  // Import your products data
 import NavigationBar from '../components/NavigationBar';
+import Footer from '../components/Footer';
 
 const ProductDetails: React.FC = () => {
   const { productId } = useParams<{ productId: string }>()!;  // Retrieve productId from URL
@@ -72,13 +73,23 @@ const ProductDetails: React.FC = () => {
 
           {/* Product Dimensions (if available) */}
           {product.dimensions && <p className="text-sm text-gray-600">Dimensions: {product.dimensions}</p>}
-          <span>Availability:<button className='bg-green-500 px-3 py-2 text-white'>In Stock</button></span>
-        <div>
-          <button className='bg-blue-500 px-3 py-2 text-white rounded-md mt-2'>Add To Cart</button>
-        </div>
+
+          {/* Availability */}
+          <span>
+            Availability:
+            <button className={`px-3 py-2 text-white mx-2 my-1 ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}>
+              {product.inStock ? 'In Stock' : 'Out of Stock'}
+            </button>
+          </span>
+
+          {/* Add to Cart Button */}
+          <div>
+            <button className='bg-blue-500 px-3 py-2 text-white rounded-md mt-2'>Add To Cart</button>
+          </div>
         </div>
       </div>
     </div>
+    <Footer/>
     </div>
   );
 };

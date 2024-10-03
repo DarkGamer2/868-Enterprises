@@ -14,7 +14,8 @@ const Gallery: React.FC<GalleryProps> = ({ mainImage, additionalImages }) => {
         <img
           src={selectedImage}
           alt="Main Product"
-          className="w-full h-auto object-cover border border-gray-300 rounded-lg"
+          className="main-image w-full h-auto rounded-lg object-cover"
+        style={{ height: '300px', width: '100%', borderRadius: '10px' }}
         />
       </div>
       <div className="flex space-x-2">
