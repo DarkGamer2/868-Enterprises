@@ -2,6 +2,7 @@ import NavigationBar from "../components/NavigationBar";
 import Footer from "../components/Footer";
 import { products } from "../Data/products";
 import Product from "../components/Product";
+// import axios from "axios";
 import { useTheme } from "../context/theme/ThemeContext";
 
 const HouseholdItems = () => {

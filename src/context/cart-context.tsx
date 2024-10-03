@@ -47,8 +47,11 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     if (!user) {
       setCartItems(getDefaultCart()); // Clear the cart if the user is not authenticated
     }
+  }, [user]);
+
+  useEffect(() => {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems, user]);
+  }, [cartItems]);
 
   const getTotalCartAmount = (): number => {
     let totalAmount = 0;
@@ -88,7 +91,6 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     setCartItems // Include setCartItems in the context value
   };
 
-  console.log(cartItems);
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}

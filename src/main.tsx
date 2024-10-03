@@ -11,7 +11,6 @@ import Login from "./pages/Login.tsx";
 import CartContextProvider from "./context/cart-context.tsx";
 import Cart from "./pages/Cart.tsx";
 import ProductDetails from "./pages/ProductDetails.tsx";
-import { products } from "./Data/products.ts";
 import CreateAccount from "./pages/CreateAccount.tsx";
 import Logout from "./components/Logout.tsx";
 import { ThemeProvider } from "./context/theme/ThemeContext.tsx";
@@ -25,24 +24,6 @@ import CheckoutPage from "./pages/Checkout.tsx";
 import Cancel from "./pages/Cancel.tsx";
 import { UserProvider } from "./context/user-context.tsx";
 import NotFound from "./pages/NotFound.tsx";
-
-interface ProductProps {
-  productName: string;
-  productPrice: number;
-  productDescription: string;
-  productImage: string;
-  inStock: boolean;
-}
-
-const product: ProductProps = products.map((product) => {
-  return {
-    productName: product.itemName,
-    productPrice: product.price,
-    productDescription: product.category,
-    productImage: product.itemImage,
-    inStock: product.inStock ?? false, // Ensure inStock is always a boolean
-  };
-})[0]; // Assuming there's at least one product in the array
 
 const router = createBrowserRouter([
   {
@@ -131,22 +112,18 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "product/:id", // Change the dynamic route to be more specific
-    element: (
-      <ProductDetails
-        productName={product.productName}
-        productPrice={product.productPrice}
-        productDescription={product.productDescription}
-        productImage={product.productImage}
-        inStock={product.inStock}
-      />
-    ),
+    path: "/product/:productId", // Change the dynamic route to be more specific
+    element: <ProductDetails />,
     errorElement: <Error />,
   },
   {
     path: "dashboard",
     element: <Dashboard />,
-  }
+  },
+  // {
+  //   path:"dev/addproduct",
+  //   element: <AddProductTest />,
+  // }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -105,10 +105,28 @@ export const products=[
         "category":"medical"
     },
     {
-        "itemName":"Kitchen Table Top",
-        "itemImage":"https://www.realsimple.com/thmb/rioVdb6JqXjZPKfuzbhx5u08u3I=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/types-of-countertops-guide-2000-bd3299d3ea5d42c68f47e8cf9cd2885d.jpg",
-        "price":1000.00,
-        "id":16,
-        "category":"household"
-    }
-]
+        "itemName":"White & Gold Marble Wallpaper",
+        "itemImage":"/src/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
+        "productDescription":"White And Gold crackle Waterproof And Oil Proof Pvc Self-adhesive Kitchen Accessories Drawer/shelf Liner, Table/countertop Protection Sticker, Household Chalkboard Sticker, Marble Wallpaper.",
+        "dimensions":"24 x 24 x 24 inches",
+        "additionalImages":[
+            "/src/assets/products/Images/00137EDE-79B5-4E13-BF8E-E0F04AEE86DE.JPG",
+            "/src/assets/products/Images/4FFC5F1F-25A0-4009-A59C-E6F1BA0CDB87.JPG",
+            "/src/assets/products/Images/5F7ECB4C-607B-478B-AC20-38C3034E546B.JPG"
+        ],
+        "styles":{
+            "style1":{
+                "productImage":"/src/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
+                "styleName":"White & Gold Marble"
+            },
+            "style2":{
+                "productImage":"/src/assets/products/Images/53AC5683-4475-401E-94DD-CF193BB324F0.JPG",
+                "styleName":"Black & Gold Marble"
+            },
+            },
+            "productDescription2":"Delivery via ttpost (online payment required) or selected pick up Locations.",
+            "price":150.00,
+            "id":16,
+            "category":"household"
+        }
+    ]
