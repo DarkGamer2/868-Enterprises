@@ -8,10 +8,11 @@ import Footer from '../components/Footer';
 import { useTheme } from '../context/theme/ThemeContext';
 
 const ProductDetails: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>()!;  // Retrieve productId from URL
-  const [product, setProduct] = useState<any>(null);        // Holds the product data
+  const { productId } = useParams<{ productId: string }>();  // Retrieve productId from URL
+  const [product, setProduct] = useState<any>(null);         // Holds the product data
   const [selectedStyle, setSelectedStyle] = useState<any>(null);  // Holds the currently selected style
   const [mainImage, setMainImage] = useState<string>('');    // Holds the current main image for the gallery
+  const [additionalImages, setAdditionalImages] = useState<string[]>([]); // Holds the additional images for the gallery
   const { theme } = useTheme();  // Use the theme context
   
   // Fetch the product based on the productId from the URL
@@ -25,8 +26,9 @@ const ProductDetails: React.FC = () => {
       const initialStyle = selectedProduct.styles ? Object.values(selectedProduct.styles)[0] : null;
       setSelectedStyle(initialStyle);
 
-      // Default the main image to the product's main image or the first style image if available
+      // Default the main image and additional images
       setMainImage(selectedProduct.itemImage || (initialStyle && initialStyle.productImage) || '');
+      setAdditionalImages(initialStyle?.additionalImages || selectedProduct.additionalImages || []);
     }
   }, [productId]);
 
@@ -34,6 +36,7 @@ const ProductDetails: React.FC = () => {
   const handleStyleSelect = (style: any) => {
     setSelectedStyle(style);  // Update selected style
     setMainImage(style.productImage);  // Update the main image to the style's image
+    setAdditionalImages(style.additionalImages || []);  // Update additional images for the gallery
   };
 
   // If no product is found, display a "Product not found" message
@@ -44,12 +47,12 @@ const ProductDetails: React.FC = () => {
       <NavigationBar />
       <div className="product-details max-w-5xl mx-auto p-6">
         {/* Product Name */}
-        <h1 className="text-2xl font-bold mb-4">{product.itemName}</h1>
+        <h1 className="text-2xl font-bold mb-4">{selectedStyle ? selectedStyle.styleName : product.itemName}</h1>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left column - Gallery */}
           <div>
-            <Gallery mainImage={mainImage} additionalImages={product.additionalImages || []} />
+            <Gallery mainImage={mainImage} additionalImages={additionalImages} />
           </div>
 
           {/* Right column - Product Details & Style Switcher */}
@@ -67,10 +70,10 @@ const ProductDetails: React.FC = () => {
             )}
 
             {/* Product Price */}
-            <p className="text-lg font-semibold mb-4">Price: ${product.price.toFixed(2)}</p>
+            <p className="text-lg font-semibold mb-4">Price: ${selectedStyle ? selectedStyle.price.toFixed(2) : product.price.toFixed(2)}</p>
 
             {/* Product Descriptions */}
-            <p className="mb-4">{product.productDescription}</p>
+            <p className="mb-4">{selectedStyle ? selectedStyle.description : product.productDescription}</p>
             {product.productDescription2 && <p className="mb-4">{product.productDescription2}</p>}
 
             {/* Product Dimensions (if available) */}
