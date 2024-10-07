@@ -50,16 +50,16 @@ export const products = [
     },
     {
         "itemName": "Usha Glow Shimmer Spray",
-        "itemImage": "/src/assets/products/Images/F288F213-4892-42E6-B4FD-D23266E11375.JPG",
+        "itemImage": "/assets/products/Images/F288F213-4892-42E6-B4FD-D23266E11375.JPG",
         "price": 70.00,
         "id": 3,
         "category": "makeup",
         "styles": {
             "default": {
-                "productImage": "/src/assets/products/Images/F288F213-4892-42E6-B4FD-D23266E11375.JPG",
+                "productImage": "/assets/products/Images/F288F213-4892-42E6-B4FD-D23266E11375.JPG",
                 "additionalImages": [
-                    "/src/assets/products/Images/28C9613C-3F26-4AD9-BADF-FF0F9FCE53D8.JPG",
-                    "/src/assets/products/Images/5A8023F8-C71A-4C60-854C-D38B3A7240BB.JPG"
+                    "/assets/products/Images/28C9613C-3F26-4AD9-BADF-FF0F9FCE53D8.JPG",
+                    "/assets/products/Images/5A8023F8-C71A-4C60-854C-D38B3A7240BB.JPG"
                 ],
 
                 "styleName": "USHA Glow Shimmer Spray",
@@ -80,9 +80,9 @@ export const products = [
         "productDescription": "White And Gold crackle Waterproof And Oil Proof Pvc Self-adhesive Kitchen Accessories Drawer/shelf Liner, Table/countertop Protection Sticker, Household Chalkboard Sticker, Marble Wallpaper.",
         "dimensions": "24 x 24 x 24 inches",
         "additionalImages": [
-            "/src/assets/products/Images/00137EDE-79B5-4E13-BF8E-E0F04AEE86DE.JPG",
-            "/src/assets/products/Images/4FFC5F1F-25A0-4009-A59C-E6F1BA0CDB87.JPG",
-            "/src/assets/products/Images/5F7ECB4C-607B-478B-AC20-38C3034E546B.JPG"
+            "/assets/products/Images/00137EDE-79B5-4E13-BF8E-E0F04AEE86DE.JPG",
+            "/assets/products/Images/4FFC5F1F-25A0-4009-A59C-E6F1BA0CDB87.JPG",
+            "/assets/products/Images/5F7ECB4C-607B-478B-AC20-38C3034E546B.JPG"
         ],
         "styles": {
             "style1": {
@@ -96,9 +96,9 @@ export const products = [
                 "styleName": "Black & White Marble",
                 "description": "Black and white marble design for a bold, modern look.",
                 "additionalImages": [
-                    "/src/assets/products/Images/7E5784A1-EC4A-4802-9728-0A49B7060176.JPG",
-                    "/src/assets/products/Images/7EF95AAA-CFE9-4054-BDC4-249864D049F3.JPG",
-                    "/src/assets/products/Images/5F7ECB4C-607B-478B-AC20-38C3034E546B.JPG"
+                    "/assets/products/Images/7E5784A1-EC4A-4802-9728-0A49B7060176.JPG",
+                    "/assets/products/Images/7EF95AAA-CFE9-4054-BDC4-249864D049F3.JPG",
+                    "/assets/products/Images/5F7ECB4C-607B-478B-AC20-38C3034E546B.JPG"
                 ],
                 "price": 160.00
             }
@@ -111,8 +111,8 @@ export const products = [
         "itemName":"Chamleon Eye Liner",
         "itemImage":"/src/assets/products/Images/AF7E3C37-679D-48F7-8EB6-CC6E1F8A18FB 2.JPG",
         "additionalImages":[
-            "/src/assets/products/Images/E0675019-ED26-4CE0-BC2B-988DBED84011.JPG",
-            "/src/assets/products/Images/7D0FE2EC-B1F3-4320-A47D-E33F4F3E563C.JPG"
+            "/assets/products/Images/E0675019-ED26-4CE0-BC2B-988DBED84011.JPG",
+            "/assets/products/Images/7D0FE2EC-B1F3-4320-A47D-E33F4F3E563C.JPG"
         ],
         "price":100.00,
         "productDescription":"Chameleon green and yellow, waterproof,long lasting,fine tip eyeliner",

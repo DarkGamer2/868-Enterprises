@@ -11,7 +11,7 @@ import { Badge } from "@mui/material";
 import { useTheme } from "../context/theme/ThemeContext";
 import { useCart } from "../context/cart-context";
 import { useUser } from "../context/user-context"; // Import the useUser hook
-import Logo from "../assets/images/Logo.jpg";
+import Logo from "../../public/assets/images/Logo.jpg";
 
 const NavigationBar = () => {
   const [navbarOpen, setNavbarOpen] = React.useState<boolean>(false);
