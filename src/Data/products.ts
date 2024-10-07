@@ -76,7 +76,7 @@ export const products = [
     },
     {
         "itemName": "White & Gold Marble Wallpaper",
-        "itemImage": "/src/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
+        "itemImage": "/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
         "productDescription": "White And Gold crackle Waterproof And Oil Proof Pvc Self-adhesive Kitchen Accessories Drawer/shelf Liner, Table/countertop Protection Sticker, Household Chalkboard Sticker, Marble Wallpaper.",
         "dimensions": "24 x 24 x 24 inches",
         "additionalImages": [
@@ -86,7 +86,7 @@ export const products = [
         ],
         "styles": {
             "style1": {
-                "productImage": "/src/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
+                "productImage": "/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
                 "styleName": "White & Gold Marble",
                 "description": "White and gold crackle design wallpaper for elegant spaces.",
                 "price": 150.00
@@ -109,7 +109,7 @@ export const products = [
     },
     {
         "itemName":"Chamleon Eye Liner",
-        "itemImage":"/src/assets/products/Images/AF7E3C37-679D-48F7-8EB6-CC6E1F8A18FB 2.JPG",
+        "itemImage":"/assets/products/Images/AF7E3C37-679D-48F7-8EB6-CC6E1F8A18FB 2.JPG",
         "additionalImages":[
             "/assets/products/Images/E0675019-ED26-4CE0-BC2B-988DBED84011.JPG",
             "/assets/products/Images/7D0FE2EC-B1F3-4320-A47D-E33F4F3E563C.JPG"
