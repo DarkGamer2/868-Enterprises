@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Gallery from '../components/Gallery';  // Import the Gallery component
-import StyleSwitcher from '../components/StyleSwitcher'; // Import the StyleSwitcher component
-import { products } from '../Data/products';  // Import your products data
+import Gallery from '../components/Gallery';  
+import StyleSwitcher from '../components/StyleSwitcher'; 
+import { products } from '../Data/products';  
 import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import { useTheme } from '../context/theme/ThemeContext';
 
 const ProductDetails: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>();  // Retrieve productId from URL
-  const [product, setProduct] = useState<any>(null);         // Holds the product data
-  const [selectedStyle, setSelectedStyle] = useState<any>(null);  // Holds the currently selected style
-  const [mainImage, setMainImage] = useState<string>('');    // Holds the current main image for the gallery
-  const [additionalImages, setAdditionalImages] = useState<string[]>([]); // Holds the additional images for the gallery
-  const { theme } = useTheme();  // Use the theme context
-  
+  const { productId } = useParams<{ productId: string }>();  
+  const [product, setProduct] = useState<any>(null);         
+  const [selectedStyle, setSelectedStyle] = useState<any>(null);  
+  const [mainImage, setMainImage] = useState<string>('');    
+  const [additionalImages, setAdditionalImages] = useState<string[]>([]); 
+  const { theme } = useTheme();  
+
   // Fetch the product based on the productId from the URL
   useEffect(() => {
     const selectedProduct = products.find((product) => product.id === parseInt(productId!));
@@ -34,13 +34,16 @@ const ProductDetails: React.FC = () => {
 
   // Handler for when a new style is selected
   const handleStyleSelect = (style: any) => {
-    setSelectedStyle(style);  // Update selected style
-    setMainImage(style.productImage);  // Update the main image to the style's image
-    setAdditionalImages(style.additionalImages || []);  // Update additional images for the gallery
+    setSelectedStyle(style);  
+    setMainImage(style.productImage);  
+    setAdditionalImages(style.additionalImages || []);  
   };
 
   // If no product is found, display a "Product not found" message
   if (!product) return <div>Product not found</div>;
+
+  // Determine stock status based on selectedStyle or product
+  const isInStock = selectedStyle?.inStock ?? product.inStock;
 
   return (
     <div className={`${theme === "dark" ? "bg-black text-white" : "bg-white text-black"} min-h-screen`}>
@@ -70,26 +73,37 @@ const ProductDetails: React.FC = () => {
             )}
 
             {/* Product Price */}
-            <p className="text-lg font-semibold mb-4">Price: ${selectedStyle ? selectedStyle.price.toFixed(2) : product.price.toFixed(2)}</p>
+            <p className="text-lg font-semibold mb-4">
+              Price: ${selectedStyle ? selectedStyle.price.toFixed(2) : product.price.toFixed(2)}
+            </p>
 
             {/* Product Descriptions */}
             <p className="mb-4">{selectedStyle ? selectedStyle.description : product.productDescription}</p>
             {product.productDescription2 && <p className="mb-4">{product.productDescription2}</p>}
 
             {/* Product Dimensions (if available) */}
-            {product.dimensions && <p className="text-sm text-gray-600 dark:text-gray-400">Dimensions: {product.dimensions}</p>}
+            {product.dimensions && (
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                Dimensions: {product.dimensions}
+              </p>
+            )}
 
             {/* Availability */}
             <span>
               Availability:
-              <button className={`px-3 py-2 text-white mx-2 my-1 ${product.inStock ? 'bg-green-500' : 'bg-red-500'}`}>
-                {product.inStock ? 'In Stock' : 'Out of Stock'}
+              <button className={`px-3 py-2 text-white mx-2 my-1 ${isInStock ? 'bg-green-500' : 'bg-red-500'}`}>
+                {isInStock ? 'In Stock' : 'Out of Stock'}
               </button>
             </span>
 
             {/* Add to Cart Button */}
             <div>
-              <button className="bg-blue-500 px-3 py-2 text-white rounded-md mt-2">Add To Cart</button>
+              <button 
+                className={`px-3 py-2 text-white rounded-md mt-2 ${isInStock ? 'bg-blue-500' : 'bg-gray-500 cursor-not-allowed'}`} 
+                disabled={!isInStock}
+              >
+                Add To Cart
+              </button>
             </div>
           </div>
         </div>

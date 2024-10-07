@@ -54,6 +54,7 @@ export const products = [
         "price": 70.00,
         "id": 3,
         "category": "makeup",
+        "inStock": true,
         "styles": {
             "default": {
                 "productImage": "/assets/products/Images/F288F213-4892-42E6-B4FD-D23266E11375.JPG",
@@ -79,6 +80,7 @@ export const products = [
         "itemImage": "/assets/products/Images/51F35361-7935-4319-81AE-B0C01A95D470.JPG",
         "productDescription": "White And Gold crackle Waterproof And Oil Proof Pvc Self-adhesive Kitchen Accessories Drawer/shelf Liner, Table/countertop Protection Sticker, Household Chalkboard Sticker, Marble Wallpaper.",
         "dimensions": "24 x 24 x 24 inches",
+        "inStock": true,
         "additionalImages": [
             "/assets/products/Images/00137EDE-79B5-4E13-BF8E-E0F04AEE86DE.JPG",
             "/assets/products/Images/4FFC5F1F-25A0-4009-A59C-E6F1BA0CDB87.JPG",
@@ -110,6 +112,7 @@ export const products = [
     {
         "itemName":"Chamleon Eye Liner",
         "itemImage":"/assets/products/Images/AF7E3C37-679D-48F7-8EB6-CC6E1F8A18FB 2.JPG",
+        "inStock":true,
         "additionalImages":[
             "/assets/products/Images/E0675019-ED26-4CE0-BC2B-988DBED84011.JPG",
             "/assets/products/Images/7D0FE2EC-B1F3-4320-A47D-E33F4F3E563C.JPG"
