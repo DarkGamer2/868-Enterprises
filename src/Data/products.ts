@@ -94,15 +94,15 @@ export const products = [
                 "price": 150.00
             },
             "style2": {
-                "productImage": "/src/assets/products/Images/547A1050-7F48-4750-AAF2-503B79E93711.JPG",
+                "productImage": "/assets/products/Images/547A1050-7F48-4750-AAF2-503B79E93711.JPG",
                 "styleName": "Black & White Marble",
                 "description": "Black and white marble design for a bold, modern look.",
                 "additionalImages": [
                     "/assets/products/Images/7E5784A1-EC4A-4802-9728-0A49B7060176.JPG",
                     "/assets/products/Images/7EF95AAA-CFE9-4054-BDC4-249864D049F3.JPG",
-                    "/assets/products/Images/5F7ECB4C-607B-478B-AC20-38C3034E546B.JPG"
+                    "/assets/products/Images/7E5784A1-EC4A-4802-9728-0A49B7060176.JPG"
                 ],
-                "price": 160.00
+                "price": 150.00
             }
         },
         "price": 150.00,
@@ -112,7 +112,7 @@ export const products = [
     {
         "itemName":"Chamleon Eye Liner",
         "itemImage":"/assets/products/Images/AF7E3C37-679D-48F7-8EB6-CC6E1F8A18FB 2.JPG",
-        "inStock":true,
+        "inStock":false,
         "additionalImages":[
             "/assets/products/Images/E0675019-ED26-4CE0-BC2B-988DBED84011.JPG",
             "/assets/products/Images/7D0FE2EC-B1F3-4320-A47D-E33F4F3E563C.JPG"

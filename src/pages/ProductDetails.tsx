@@ -26,17 +26,25 @@ const ProductDetails: React.FC = () => {
       const initialStyle = selectedProduct.styles ? Object.values(selectedProduct.styles)[0] : null;
       setSelectedStyle(initialStyle);
 
-      // Default the main image and additional images
-      setMainImage(selectedProduct.itemImage || (initialStyle && initialStyle.productImage) || '');
-      setAdditionalImages(initialStyle?.additionalImages || selectedProduct.additionalImages || []);
+      // Default the main image and additional images based on initial style
+      if (initialStyle) {
+        setMainImage(initialStyle.productImage || selectedProduct.itemImage || '');
+        setAdditionalImages(initialStyle.additionalImages || selectedProduct.additionalImages || []);
+      }
     }
   }, [productId]);
 
+  // Effect to handle updating images when switching styles
+  useEffect(() => {
+    if (selectedStyle) {
+      setMainImage(selectedStyle.productImage || product.itemImage || '');
+      setAdditionalImages(selectedStyle.additionalImages || product.additionalImages || []);
+    }
+  }, [selectedStyle, product]);
+
   // Handler for when a new style is selected
   const handleStyleSelect = (style: any) => {
-    setSelectedStyle(style);  
-    setMainImage(style.productImage);  
-    setAdditionalImages(style.additionalImages || []);  
+    setSelectedStyle(style);
   };
 
   // If no product is found, display a "Product not found" message
