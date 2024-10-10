@@ -85,6 +85,8 @@ const Cart = () => {
     }
   };
 
+  const hasItemsInCart = Object.values(cartItems).some((quantity) => quantity > 0);
+
   return (
     <div
       className={`flex flex-col min-h-screen ${theme === "dark" ? "bg-black text-white" : "bg-white text-black"}`}
@@ -101,46 +103,42 @@ const Cart = () => {
           </h2>
         </div>
         <div className="grid grid-cols-1 gap-4">
-          {products.map((product: Product) => {
-            if (cartItems[product.id] !== 0) {
-              return (
-                <CartItem
-                  key={product.id}
-                  productImage={product.itemImage}
-                  productName={product.itemName}
-                  productPrice={product.price}
-                  productID={product.id}
-                />
-              );
-            }
-            return null;
-          })}
+          {hasItemsInCart ? (
+            products.map((product: Product) => {
+              if (cartItems[product.id] !== 0) {
+                return (
+                  <CartItem
+                    key={product.id}
+                    productImage={product.itemImage}
+                    productName={product.itemName}
+                    productPrice={product.price}
+                    productID={product.id}
+                  />
+                );
+              }
+              return null;
+            })
+          ) : (
+            <h1 className={`text-center text-xl font-lato ${theme === "dark" ? "text-white" : "text-black"}`}>
+              Your Cart is Empty
+            </h1>
+          )}
         </div>
         {totalAmount > 0 ? (
           <div className="flex flex-col md:flex-row justify-between items-center mt-4">
             <div className={`text-xl font-bold mb-4 md:mb-0 ${theme === "dark" ? "text-white" : "text-black"}`}>
               Sub Total: ${totalAmount.toFixed(2)}
             </div>
-            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+            <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
               <button
-                onClick={() => navigate("/")}
-                className="bg-blue-600 rounded-md px-4 py-2 text-white"
-              >
-                Continue Shopping
-              </button>
-              <button
+                className="py-2 px-4 bg-blue-500 text-white rounded-md"
                 onClick={handleCheckout}
-                className="bg-green-600 rounded-md px-4 py-2 text-white"
               >
-                Proceed To Checkout
+                Checkout
               </button>
             </div>
           </div>
-        ) : (
-          <h1 className={`text-center text-xl font-lato ${theme === "dark" ? "text-white" : "text-black"}`}>
-            Your Cart is Empty
-          </h1>
-        )}
+        ) : null}
       </main>
       <Footer />
     </div>

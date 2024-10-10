@@ -27,11 +27,7 @@ export const useCart = () => useContext(ShopContext);
 
 // Function to get the default cart structure
 const getDefaultCart = (): Record<number, number> => {
-  const cart: Record<number, number> = {};
-  for (let i = 1; i < products.length + 1; i++) {
-    cart[i] = 0;
-  }
-  return cart;
+  return {}; // Start with an empty cart
 };
 
 // Cart context provider component
@@ -71,15 +67,23 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
       alert("You must be logged in to add items to the cart.");
       return;
     }
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+    setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
   };
 
   const removeFromCart = (itemId: number): void => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+    setCartItems((prev) => {
+      const updatedCart = { ...prev, [itemId]: prev[itemId] - 1 };
+      if (updatedCart[itemId] <= 0) delete updatedCart[itemId];
+      return updatedCart;
+    });
   };
 
   const updateCartItemCount = (newAmount: number, itemId: number): void => {
-    setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
+    setCartItems((prev) => {
+      const updatedCart = { ...prev, [itemId]: newAmount };
+      if (updatedCart[itemId] <= 0) delete updatedCart[itemId];
+      return updatedCart;
+    });
   };
 
   const contextValue: ShopContextType = { 
