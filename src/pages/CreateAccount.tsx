@@ -16,16 +16,31 @@ const CreateAccount = () => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setCreatingAccount(true);
-    
+  
+    // Extract CSRF token from the cookie
+    const csrfToken = document.cookie
+      .split('; ')
+      .find(row => row.startsWith('XSRF-TOKEN='))
+      ?.split('=')[1];
+  
     try {
-      await axios.post("https://868-enterprises-api-production.up.railway.app/api/users/register", {
-        fullName,
-        email,
-        username,
-        password,
-      });
-      
-      // Navigate to login page
+      await axios.post(
+        "https://868-enterprises-api-production.up.railway.app/api/users/register",
+        {
+          fullName,
+          email,
+          username,
+          password,
+        },
+        {
+          headers: {
+            "X-CSRF-Token": csrfToken,  // Include the CSRF token
+          },
+          withCredentials: true, // Ensure credentials (cookies) are sent
+        }
+      );
+  
+      // Navigate to login page after successful registration
       navigate("/login");
       console.log("Navigation successful");
     } catch (error) {
@@ -34,7 +49,7 @@ const CreateAccount = () => {
       setCreatingAccount(false);
     }
   };
-
+  
   return (
     <div className={`flex flex-col min-h-screen ${theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'}`}>
       <NavigationBar />
