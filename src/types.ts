@@ -6,6 +6,7 @@ export interface Style {
   price: number;
   inStock: boolean;  // Ensure this is always a boolean, not optional
   description?: string; // Made optional
+  dimensions?: string; // Add dimensions as an optional property
 }
 
 export interface Product {
@@ -16,8 +17,9 @@ export interface Product {
   inStock: boolean;  // This should also be non-optional
   productDescription: string;
   productDescription2?: string;
-  dimensions?: string;
+  dimensions?: string; // Product level dimensions
   category: string;
+  additionalImages?: string[];
 
   styles: {
       default: Style; // Make default style required

@@ -169,6 +169,7 @@ inStock: true,
         styleName: "Teal & Gold Marble Wallpaper",
         description: "Teal & Gold Waterproof And Oil Proof Pvc Self-adhesive Kitchen Accessories Drawer/shelf Liner...",
         dimensions: '17.5" x 10ft', // Add dimensions here
+        inStock: true,
         additionalImages: [
           "/assets/products/Images/teal_gold_marble/Screenshot_20241008_180844_Chrome.jpg",
           "/assets/products/Images/teal_gold_marble/Screenshot_20241011_091459_Chrome.jpg",
