@@ -24,11 +24,17 @@ import CheckoutPage from "./pages/Checkout.tsx";
 import Cancel from "./pages/Cancel.tsx";
 import { UserProvider } from "./context/user-context.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import { products } from "./Data/products.ts"; // Make sure to import your products
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    errorElement: <Error />,
+  },
+  {
+    path: "/product/:productId/style/:styleId", // Dynamic route
+    element: <ProductDetails />, // No props here
     errorElement: <Error />,
   },
   {
@@ -107,23 +113,14 @@ const router = createBrowserRouter([
     errorElement: <Error />,
   },
   {
-    path: "*", // Wildcard route to catch all undefined paths
-    element: <NotFound />,
-    errorElement: <Error />,
-  },
-  {
-    path: "/product/:productId", // Change the dynamic route to be more specific
-    element: <ProductDetails />,
-    errorElement: <Error />,
-  },
-  {
     path: "dashboard",
     element: <Dashboard />,
   },
-  // {
-  //   path:"dev/addproduct",
-  //   element: <AddProductTest />,
-  // }
+  {
+    path: "*", // Wildcard route to catch all undefined paths at the end
+    element: <NotFound />,
+    errorElement: <Error />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

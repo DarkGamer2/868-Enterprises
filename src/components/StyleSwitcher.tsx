@@ -1,9 +1,5 @@
 import React from 'react';
-
-interface Style {
-  productImage: string;
-  styleName: string;
-}
+import { Style } from '../types';
 
 interface StyleSwitcherProps {
   styles: Style[];
@@ -14,11 +10,11 @@ interface StyleSwitcherProps {
 const StyleSwitcher: React.FC<StyleSwitcherProps> = ({ styles, selectedStyle, onSelectStyle }) => {
   return (
     <div className="flex space-x-2">
-      {styles.map((style, index) => (
+      {styles.map((style) => (
         <button
-          key={index}
+          key={style.styleName} // Ensure styleName is unique
           className={`px-4 py-2 rounded-lg border ${
-            selectedStyle === style ? 'border-blue-500' : 'border-gray-300'
+            selectedStyle?.styleName === style.styleName ? 'border-blue-500' : 'border-gray-300'
           }`}
           onClick={() => onSelectStyle(style)}
         >

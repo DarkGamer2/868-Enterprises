@@ -5,7 +5,7 @@ import XIcon from '@mui/icons-material/X';
 
 const Footer = () => {
   return (
-    <div className="bg-blue-800 mt-2 p-4">
+    <div className="bg-blue-800 p-4 mt-auto"> {/* Added mt-auto */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <div>
           <h1 className="text-center font-inter text-white text-xl">Location</h1>

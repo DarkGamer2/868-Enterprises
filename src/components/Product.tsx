@@ -4,23 +4,26 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../context/theme/ThemeContext";
 interface ProductProps {
   productName: string;
-  productPrice: string;
   productImage: string;
+  productPrice: string;
   productID: number;
+  styleID: string; // Add this prop to handle style-specific navigation
 }
 
 const Product: React.FC<ProductProps> = ({
   productName,
-  productPrice,
   productImage,
+  productPrice,
   productID,
+  styleID,
 }) => {
+
   const { addToCart, cartItems } = useContext(ShopContext);
   const cartItemAmount = cartItems[productID];
 
-  const { theme } = useTheme(); // Access theme from context
+  const { theme } = useTheme(); // Access theme from con
   return (
-   <div className={`${theme === 'dark' ? 'dark' : 'light'}`}>
+    <div className={`${theme === 'dark' ? 'dark' : 'light'}`}>
      <div className="flex flex-col items-center">
       <img
         src={productImage}
@@ -32,7 +35,7 @@ const Product: React.FC<ProductProps> = ({
         <p className="text-sm text-gray-600 dark:text-white">$ {productPrice}</p>
         <div>
           {" "}
-          <Link to={`/product/${productID}`} className="text-blue-600">
+          <Link to={`/product/${productID}/style/${styleID}`} className="text-blue-600">
             View Details
           </Link>
         </div>
@@ -49,3 +52,5 @@ const Product: React.FC<ProductProps> = ({
 };
 
 export default Product;
+
+       

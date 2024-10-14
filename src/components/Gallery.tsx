@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface GalleryProps {
   mainImage: string;
@@ -8,14 +8,19 @@ interface GalleryProps {
 const Gallery: React.FC<GalleryProps> = ({ mainImage, additionalImages }) => {
   const [selectedImage, setSelectedImage] = useState(mainImage);
 
+  // Use useEffect to update the selectedImage when mainImage changes
+  useEffect(() => {
+    setSelectedImage(mainImage); // Update selectedImage when mainImage changes
+  }, [mainImage]);
+
   return (
     <div>
       <div className="mb-4">
         <img
           src={selectedImage}
           alt="Main Product"
-          className="main-image w-full h-auto rounded-lg object-cover"
-        style={{ height: '300px', width: '100%', borderRadius: '10px' }}
+          className="main-image w-full rounded-lg object-contain"
+          style={{ height: '400px', width: '100%', borderRadius: '10px' }}
         />
       </div>
       <div className="flex space-x-2">
