@@ -15,6 +15,7 @@ const ProductList = () => {
                 productImage={product.itemImage}
                 productPrice={product.price.toString()}
                 productID={product.id}
+                styleID={product.styles && product.styles.default ? product.styles.default.styleName : ''} // Pass styleID as styleName
               />
             </div>
           );
