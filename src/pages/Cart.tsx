@@ -26,7 +26,7 @@ interface Product {
 const Cart = () => {
   const navigate = useNavigate();
   const { cartItems, getTotalCartAmount, setCartItems } = useContext(ShopContext) as {
-    cartItems: CartItems; // Specify the type here
+    cartItems: CartItems;
     getTotalCartAmount: () => number;
     setCartItems: React.Dispatch<React.SetStateAction<CartItems>>;
   };
@@ -38,6 +38,7 @@ const Cart = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Ensure cart is cleared if user logs out
   useEffect(() => {
     if (!user) {
       setCartItems({});
@@ -52,6 +53,7 @@ const Cart = () => {
 
     const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY || ""}`);
 
+    // Filter cart items that have a quantity greater than 0
     const filteredItemsArray = Object.keys(cartItems)
       .filter(key => cartItems[key] > 0)
       .map(key => {
@@ -62,7 +64,7 @@ const Cart = () => {
         return {
           id: key,
           name: product.itemName,
-          price: product.price,
+          price: product.price ?? 0, // Ensure price is defined
           image: product.itemImage,
           quantity: cartItems[key],
         };
@@ -97,6 +99,8 @@ const Cart = () => {
     }
   };
 
+
+  // Check if there are any items in the cart
   const hasItemsInCart = Object.values(cartItems).some(quantity => quantity > 0);
 
   return (
@@ -118,7 +122,7 @@ const Cart = () => {
                     key={product.id}
                     productImage={product.itemImage}
                     productName={product.itemName}
-                    productPrice={product.price}
+                    productPrice={product.price ?? 0} // Ensure price is valid
                     productID={product.id}
                   />
                 );
