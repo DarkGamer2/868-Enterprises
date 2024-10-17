@@ -4,11 +4,12 @@ import Home from './pages/Home';
 import NavigationBar from './components/NavigationBar';
 import './App.css';
 import CartContextProvider from './context/cart-context';
-
+import axios from 'axios';
 
 function App() {
+  axios.defaults.withCredentials = true;
+
   return (
-   
     <ThemeProvider>
      <CartContextProvider>
      <div className="flex flex-col min-h-screen">
@@ -19,8 +20,6 @@ function App() {
       </div>
      </CartContextProvider>
     </ThemeProvider>
-   
-   
   );
 }
 
