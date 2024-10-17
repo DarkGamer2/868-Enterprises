@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import NavigationBar from '../../components/NavigationBar';  // Import the NavigationBar component
 import Sidebar from '../../components/Sidebar';
 import { useTheme } from '../../context/theme/ThemeContext';
-import axios from 'axios';
+// import axios from 'axios';
 const Dashboard: React.FC = () => {
     const {theme}=useTheme();
-  const [loaded, setLoaded] = useState(false);
+  // const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setLoaded(true);
+    // setLoaded(true);
   }, []);
 
   return (
