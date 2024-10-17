@@ -7,6 +7,12 @@ import { NavLink } from "react-router-dom";
 import { useTheme } from "../context/theme/ThemeContext"; // Import the useTheme hook
 import { useUser } from "../context/user-context"; // Import the useUser hook
 
+// Mock function to get the CSRF token. Replace it with your actual implementation.
+async function getCsrfToken(): Promise<string> {
+  const response = await axios.get('https://868-enterprises-api-production.up.railway.app/api/csrf-token', { withCredentials: true });
+  return response.data.csrfToken;
+}
+
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -19,13 +25,19 @@ const Login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      // Fetch CSRF token before sending login request
+      const csrfToken = await getCsrfToken();
+      
       console.log("Sending login request with:", { email, password });
       const response = await axios.post(
-        "http://localhost:4900/api/users/login",
+        "https://868-enterprises-api-production.up.railway.app/api/users/login",
         { email, password },
         {
           withCredentials: true,
-          headers: { "Content-Type": "application/json" },
+          headers: { 
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken,  // Pass the CSRF token in headers
+          },
         }
       );
 

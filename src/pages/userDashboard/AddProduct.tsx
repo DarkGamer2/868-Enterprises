@@ -9,17 +9,17 @@ const AddProduct = () => {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productDescription, setProductDescription] = useState("");
-  const [productImage, setProductImage] = useState<File | null>(null);
+  const [productImages, setProductImages] = useState<File[]>([]);
 
   const handleSubmit = async (e: React.MouseEvent) => {
     e.preventDefault();
 
     const API_URL = "https://868-enterprises-api-production.up.railway.app";
     try {
-      let imageUrl = "";
-      if (productImage) {
+      const imageUrls = [];
+      for (const image of productImages) {
         const formData = new FormData();
-        formData.append("file", productImage);
+        formData.append("file", image);
 
         const imageUploadResponse = await axios.post(`${API_URL}/upload`, formData, {
           headers: {
@@ -27,14 +27,14 @@ const AddProduct = () => {
           },
         });
 
-        imageUrl = imageUploadResponse.data.file;
+        imageUrls.push(imageUploadResponse.data.file);
       }
 
       await axios.post(`${API_URL}/api/:id/products/addProduct`, {
         productName,
         productPrice,
         productDescription,
-        productImage: imageUrl,
+        productImages: imageUrls,
       });
 
       // Optionally, add success handling here
@@ -91,14 +91,15 @@ const AddProduct = () => {
 
             <div className="mb-4">
               <label className={`block text-sm font-medium ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>
-                Product Image
+                Product Images
               </label>
               <input
                 className={`mt-1 w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 ${theme === 'dark' ? 'bg-gray-700 border-gray-600 text-white focus:ring-blue-500' : 'bg-gray-50 border-gray-300 text-black focus:ring-blue-400'}`}
                 type="file"
-                name="productImage"
+                name="productImages"
+                multiple
                 required
-                onChange={(e) => setProductImage(e.target.files ? e.target.files[0] : null)}
+                onChange={(e) => setProductImages(Array.from(e.target.files || []))}
               />
             </div>
 
