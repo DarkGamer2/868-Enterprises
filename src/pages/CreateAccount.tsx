@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent,  useState } from "react";
 import axios from "axios";
 import NavigationBar from "../components/NavigationBar";
 import { useNavigate } from "react-router-dom";
@@ -13,11 +13,10 @@ const CreateAccount = () => {
   const [username, setUsername] = useState("");
   const [creatingAccount, setCreatingAccount] = useState(false);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e:React.MouseEvent) => {
     e.preventDefault();
     setCreatingAccount(true);
   
-    // Extract CSRF token from the cookie
     const csrfToken = document.cookie
       .split('; ')
       .find(row => row.startsWith('XSRF-TOKEN='))
@@ -26,6 +25,7 @@ const CreateAccount = () => {
     try {
       await axios.post(
         "https://868-enterprises-api-production.up.railway.app/api/users/register",
+        // "http://localhost:4900/api/users/register",
         {
           fullName,
           email,
@@ -59,7 +59,7 @@ const CreateAccount = () => {
             <h2 className="mb-4 text-3xl font-semibold text-center">
               Create Account
             </h2>
-            <form onSubmit={handleSubmit}>
+            <form>
               <div className="mb-4">
                 <label className={`block ${theme === 'dark' ? 'text-gray-300' : 'text-gray-700'}`}>Full Name:</label>
                 <input
@@ -102,7 +102,7 @@ const CreateAccount = () => {
               </div>
               <div>
                 <button
-                  type="submit"
+                  type="submit" onClick={handleSubmit}
                   className="w-full px-4 py-2 text-sm font-bold text-center text-white bg-blue-500 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                   {creatingAccount ? "Creating Account" : "Create Account"}

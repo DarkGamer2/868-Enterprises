@@ -24,6 +24,12 @@ import CheckoutPage from "./pages/Checkout.tsx";
 import Cancel from "./pages/Cancel.tsx";
 import { UserProvider } from "./context/user-context.tsx";
 import NotFound from "./pages/NotFound.tsx";
+<<<<<<< HEAD
+=======
+import Profile from "./pages/userDashboard/Profile.tsx";
+import { products } from "./Data/products.ts"; // Make sure to import your products
+import EditProfile from "./pages/userDashboard/EditProfile.tsx";
+>>>>>>> dev
 
 const router = createBrowserRouter([
   {
@@ -119,6 +125,14 @@ const router = createBrowserRouter([
     path: "*", // Wildcard route to catch all undefined paths at the end
     element: <NotFound />,
     errorElement: <Error />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
+  {
+    path: "/edit-profile",
+    element: <EditProfile />,
   },
 ]);
 

@@ -185,6 +185,36 @@ inStock: true,
     id: 16,
     category: "household",
   },
+  {
+    itemName:"Dramatic Black Eyelash",
+    productDescription:"Dramatic black eyelashes, perfect for a night out.",
+    itemImage:"/assets/products/Images/black_lash/Screenshot_20240820_142237_Chrome.jpg",
+    inStock:true,
+    price:100.0,
+    additionalImages:[
+      "assets/products/Images/black_lash/Screenshot_20240820_142216_Chrome",
+      "assets/products/Images/black_lash/Screenshot_20240820_142228_Chrome",
+      "assets/products/Images/black_lash/Screenshot_20240820_142246_Chrome",
+      "assets/products/Images/black_lash/Screenshot_20240820_142256_Chrome",
+    ],
+    id:17,
+    category:"accessories",
+    styles:{
+      default:{
+        productImage:"/assets/products/Images/black_lash/Screenshot_20240820_142237_Chrome.jpg",
+        styleName:"Dramatic Black Eyelash",
+        description:"Dramatic black eyelashes, perfect for a night out.",
+        price:100.0,
+        inStock:true,
+        additionalImages:[
+          "assets/products/Images/black_lash/Screenshot_20240820_142216_Chrome.jpg",
+          "assets/products/Images/black_lash/Screenshot_20240820_142228_Chrome.jpg",
+          "assets/products/Images/black_lash/Screenshot_20240820_142246_Chrome.jpg",
+          "assets/products/Images/black_lash/Screenshot_20240820_142256_Chrome.jpg",
+        ]
+      },
+    },
+  }
 //   {
 //     itemName: "Chamleon Eye Liner",
 //     itemImage:
