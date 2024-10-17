@@ -50,7 +50,7 @@ const Cart = () => {
       return;
     }
 
-    const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
+    const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY || ""}`);
 
     const filteredItemsArray = Object.keys(cartItems)
       .filter(key => cartItems[key] > 0)

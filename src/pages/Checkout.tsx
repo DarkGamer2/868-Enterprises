@@ -5,7 +5,7 @@ import NavigationBar from "../components/NavigationBar";
 import { ClipLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY || "");
+const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY || ""}`);
 
 const CheckoutForm: React.FC = () => {
   const stripe = useStripe();
