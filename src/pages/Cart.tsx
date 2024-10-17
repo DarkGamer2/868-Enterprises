@@ -50,7 +50,7 @@ const Cart = () => {
       return;
     }
 
-    const stripePromise = loadStripe(`${process.env.REACT_APP_STRIPE_PUBLIC_KEY || ""}`);
+    const stripePromise = loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY || ""}`);
 
     const filteredItemsArray = Object.keys(cartItems)
       .filter(key => cartItems[key] > 0)
@@ -77,7 +77,7 @@ const Cart = () => {
     setError(null); // Reset error state
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/checkout`, orderDetails);
+      const response = await axios.post(`${import.meta.env.VITE_API_URL}/api/checkout`, orderDetails);
       if (response.status === 200) {
         const stripe = await stripePromise;
         const session = response.data;
