@@ -16,7 +16,7 @@ const Logout = () => {
         );
         // Optionally, you can handle any state reset if needed
         navigate("/login");
-      } catch (error) {
+      } catch (error:any) {
         // Use a logging library or function to log the error
         logError("Logout error: ", error); // Send error to logging system
         // Optionally, you could display a user-friendly message here

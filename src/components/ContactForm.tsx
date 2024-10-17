@@ -43,7 +43,7 @@ const ContactForm = () => {
         { withCredentials: true }
       );
       navigate("/confirmed");
-    } catch (error) {
+    } catch (error:any) {
       logError("Contact form submission error: ", error);
       setError("Failed to send request. Please try again later."); // Update state with error
     }
