@@ -11,67 +11,6 @@ export const styleKeys = {
 
 export const products:Product[] = [
   {
-    itemName: "Blue Cotton Shirt",
-    productDescription: "Comfortable blue cotton shirt, perfect for everyday wear.",
-    itemImage:
-      "https://www.stoneycreekhunting.co.nz/image/cache/catalog/product_images/corporate/mens/shirts/Mens_Corporate_Shirt_Long_Sleeve_Float_Navy-875x1000.jpg",
-    price: 125.0,
-    id: 1,
-    category: "clothing",
-    inStock: true,
-    styles: {
-      default: {
-        productImage:
-          "https://www.stoneycreekhunting.co.nz/image/cache/catalog/product_images/corporate/mens/shirts/Mens_Corporate_Shirt_Long_Sleeve_Float_Navy-875x1000.jpg",
-        styleName: "Blue Cotton",
-        description:
-          "Comfortable blue cotton shirt, perfect for everyday wear.",
-        price: 125.0,
-        inStock: true,
-      },
-      style1: {
-        productImage: "https://example.com/blue_stripe_shirt.jpg",
-        styleName: "Blue Striped Cotton",
-        description: "Stylish blue striped cotton shirt for formal occasions.",
-        price: 135.0,
-        inStock: true,
-      },
-      style2: {
-        productImage: "https://example.com/white_cotton_shirt.jpg",
-        styleName: "White Cotton",
-        description: "Classic white cotton shirt for a sleek, formal look.",
-        price: 140.0,
-        inStock: true,
-      },
-    },
-  },
-  {
-    itemName: "Panadol Extra Strength",
-    productDescription: "Panadol Extra Strength for fast relief from headaches and body pain.",
-    inStock: true,
-    itemImage:
-      "https://i-cf65.ch-static.com/content/dam/cf-consumer-healthcare/panadol-reskin/es_CB/Reskin/products/Panadol_Extra_Fuerte_16_tablets_455x455px.jpg?auto=format",
-    price: 45.0,
-    id: 2,
-    category: "medical",
-    styles: {
-      default: {
-        productImage:
-          "https://i-cf65.ch-static.com/content/dam/cf-consumer-healthcare/panadol-reskin/es_CB/Reskin/products/Panadol_Extra_Fuerte_16_tablets_455x455px.jpg?auto=format",
-        styleName: "Extra Strength",
-        description:
-          "Panadol Extra Strength for fast relief from headaches and body pain.",
-        price: 45.0,inStock: true,
-      },
-      style1: {
-        productImage: "https://example.com/panadol_soft_gel.jpg",
-        styleName: "Soft Gel",
-        description: "Panadol in soft gel capsules for easier consumption.",
-        price: 50.0,inStock: true,
-      },
-    },
-  },
-  {
     itemName: "Usha Glow Shimmer Spray",
     productDescription: "A complete set of high-quality makeup essentials.",
     itemImage:
