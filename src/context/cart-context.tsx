@@ -1,8 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { products } from "../Data/products";
 import { useUser } from "../context/user-context"; // Import the user context
+import Alert from "../components/Alert";
 
-// Define the shape of the context
 interface ShopContextType {
   cartItems: Record<number, number>;
   addToCart: (itemId: number) => void;
@@ -12,7 +12,6 @@ interface ShopContextType {
   setCartItems: React.Dispatch<React.SetStateAction<Record<number, number>>>; // Add setCartItems to the context type
 }
 
-// Create the context with default values
 export const ShopContext = createContext<ShopContextType>({
   cartItems: {},
   addToCart: () => {},
@@ -22,15 +21,12 @@ export const ShopContext = createContext<ShopContextType>({
   setCartItems: () => {}, // Provide a default no-op function
 });
 
-// Custom hook to use the cart context
 export const useCart = () => useContext(ShopContext);
 
-// Function to get the default cart structure
 const getDefaultCart = (): Record<number, number> => {
   return {}; // Start with an empty cart
 };
 
-// Cart context provider component
 const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const [cartItems, setCartItems] = useState<Record<number, number>>(() => {
     const savedCartItems = localStorage.getItem('cartItems');
@@ -38,6 +34,8 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
   });
 
   const { user } = useUser(); // Get the user from the user context
+  const [alertVisible, setAlertVisible] = useState(false); // Add state for alert visibility
+  const [alertMessage, setAlertMessage] = useState(""); // State for alert message
 
   useEffect(() => {
     if (!user) {
@@ -64,7 +62,8 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
 
   const addToCart = (itemId: number): void => {
     if (!user) {
-      alert("You must be logged in to add items to the cart.");
+      setAlertMessage("You must be logged in to add items to the cart.");
+      setAlertVisible(true); // Show the alert
       return;
     }
     setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
@@ -86,18 +85,23 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     });
   };
 
-  const contextValue: ShopContextType = { 
-    cartItems, 
-    addToCart, 
-    removeFromCart, 
-    updateCartItemCount, 
-    getTotalCartAmount, 
-    setCartItems // Include setCartItems in the context value
+  const contextValue: ShopContextType = {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    updateCartItemCount,
+    getTotalCartAmount,
+    setCartItems, // Include setCartItems in the context value
   };
 
   return (
     <ShopContext.Provider value={contextValue}>
       {props.children}
+      <Alert
+        message={alertMessage}
+        visible={alertVisible}
+        onClose={() => setAlertVisible(false)} // Hide the alert when closed
+      />
     </ShopContext.Provider>
   );
 };
