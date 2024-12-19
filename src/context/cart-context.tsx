@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { products } from "../Data/products";
-import { useUser } from "../context/user-context"; // Import the user context
+import { useUser } from "../context/user-context";
 import Alert from "../components/Alert";
 
 interface ShopContextType {
@@ -9,7 +9,7 @@ interface ShopContextType {
   removeFromCart: (itemId: number) => void;
   updateCartItemCount: (newAmount: number, itemId: number) => void;
   getTotalCartAmount: () => number;
-  setCartItems: React.Dispatch<React.SetStateAction<Record<number, number>>>; // Add setCartItems to the context type
+  setCartItems: React.Dispatch<React.SetStateAction<Record<number, number>>>;
 }
 
 export const ShopContext = createContext<ShopContextType>({
@@ -18,7 +18,7 @@ export const ShopContext = createContext<ShopContextType>({
   removeFromCart: () => {},
   updateCartItemCount: () => {},
   getTotalCartAmount: () => 0,
-  setCartItems: () => {}, // Provide a default no-op function
+  setCartItems: () => {},
 });
 
 export const useCart = () => useContext(ShopContext);
@@ -27,19 +27,27 @@ const getDefaultCart = (): Record<number, number> => {
   return {}; // Start with an empty cart
 };
 
-const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
+const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cartItems, setCartItems] = useState<Record<number, number>>(() => {
     const savedCartItems = localStorage.getItem('cartItems');
-    return savedCartItems ? JSON.parse(savedCartItems) : getDefaultCart();
+    if (savedCartItems) {
+      const parsedCart = JSON.parse(savedCartItems);
+      return Object.fromEntries(
+        Object.entries(parsedCart).filter(([key, value]) => 
+          products.some(product => product.id === Number(key)) && typeof value === 'number'
+        )
+      ) as Record<number, number>;
+    }
+    return getDefaultCart();
   });
 
-  const { user } = useUser(); // Get the user from the user context
-  const [alertVisible, setAlertVisible] = useState(false); // Add state for alert visibility
-  const [alertMessage, setAlertMessage] = useState(""); // State for alert message
+  const { user } = useUser();
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     if (!user) {
-      setCartItems(getDefaultCart()); // Clear the cart if the user is not authenticated
+      setCartItems(getDefaultCart());
     }
   }, [user]);
 
@@ -48,37 +56,31 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
   }, [cartItems]);
 
   const getTotalCartAmount = (): number => {
-    let totalAmount = 0;
-    for (const item in cartItems) {
-      if (cartItems[item] > 0) {
-        const itemInfo = products.find((product) => product.id === Number(item));
-        if (itemInfo) {
-          totalAmount += itemInfo.price * cartItems[item];
-        }
-      }
-    }
-    return totalAmount;
+    return Object.entries(cartItems).reduce((total, [itemId, quantity]) => {
+      const itemInfo = products.find(product => product.id === Number(itemId));
+      return itemInfo ? total + itemInfo.price * quantity : total;
+    }, 0);
   };
 
   const addToCart = (itemId: number): void => {
     if (!user) {
       setAlertMessage("You must be logged in to add items to the cart.");
-      setAlertVisible(true); // Show the alert
+      setAlertVisible(true);
       return;
     }
-    setCartItems((prev) => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
+    setCartItems(prev => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
   };
 
   const removeFromCart = (itemId: number): void => {
-    setCartItems((prev) => {
-      const updatedCart = { ...prev, [itemId]: prev[itemId] - 1 };
+    setCartItems(prev => {
+      const updatedCart = { ...prev, [itemId]: (prev[itemId] || 1) - 1 };
       if (updatedCart[itemId] <= 0) delete updatedCart[itemId];
       return updatedCart;
     });
   };
 
   const updateCartItemCount = (newAmount: number, itemId: number): void => {
-    setCartItems((prev) => {
+    setCartItems(prev => {
       const updatedCart = { ...prev, [itemId]: newAmount };
       if (updatedCart[itemId] <= 0) delete updatedCart[itemId];
       return updatedCart;
@@ -91,16 +93,16 @@ const CartContextProvider: React.FC<{ children: React.ReactNode }> = (props) => 
     removeFromCart,
     updateCartItemCount,
     getTotalCartAmount,
-    setCartItems, // Include setCartItems in the context value
+    setCartItems,
   };
 
   return (
     <ShopContext.Provider value={contextValue}>
-      {props.children}
+      {children}
       <Alert
         message={alertMessage}
         visible={alertVisible}
-        onClose={() => setAlertVisible(false)} // Hide the alert when closed
+        onClose={() => setAlertVisible(false)}
       />
     </ShopContext.Provider>
   );

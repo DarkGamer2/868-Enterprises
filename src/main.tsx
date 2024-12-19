@@ -1,5 +1,8 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {Elements} from '@stripe/react-stripe-js';
+import { loadStripe } from "@stripe/stripe-js";
+import store from "./redux/store.ts";
 import Home from "./pages/Home.tsx";
 import "./index.css";
 import Makeup from "./pages/Makeup.tsx";
@@ -26,6 +29,10 @@ import { UserProvider } from "./context/user-context.tsx";
 import NotFound from "./pages/NotFound.tsx";
 import Profile from "./pages/userDashboard/Profile.tsx";
 import EditProfile from "./pages/userDashboard/EditProfile.tsx";
+import OrderDetails from "./pages/userDashboard/OrderDetails.tsx";
+import PaymentDetails from "./pages/PaymentDetails.tsx";
+import { AuthProvider } from "./context/auth-context.tsx";
+import { Provider } from "react-redux";
 
 const router = createBrowserRouter([
   {
@@ -105,7 +112,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/checkout",
-    element: <CheckoutPage />,
+    element: (
+      <Elements stripe={loadStripe(`${import.meta.env.VITE_STRIPE_PUBLIC_KEY}`)}>
+        <CheckoutPage />
+      </Elements>
+    ),
     errorElement: <Error />,
   },
   {
@@ -130,14 +141,26 @@ const router = createBrowserRouter([
     path: "/edit-profile",
     element: <EditProfile />,
   },
+  {
+    path: "/order/:orderId",
+    element: <OrderDetails />,
+  },
+  {
+    path: "/payment",
+    element: <PaymentDetails />,
+  },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <UserProvider>
-    <ThemeProvider>
-      <CartContextProvider>
-        <RouterProvider router={router} />
-      </CartContextProvider>
-    </ThemeProvider>
-  </UserProvider>
+  <Provider store={store}>
+  <AuthProvider>
+    <UserProvider>
+      <ThemeProvider>
+        <CartContextProvider>
+          <RouterProvider router={router} />
+        </CartContextProvider>
+      </ThemeProvider>
+    </UserProvider>
+  </AuthProvider>
+  </Provider>
 );
