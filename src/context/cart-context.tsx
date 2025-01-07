@@ -1,111 +1,112 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
-import { products } from "../Data/products";
-import { useUser } from "../context/user-context";
-import Alert from "../components/Alert";
+import { createContext, useState, ReactNode } from "react";
+import { getProductData } from "../Data/products";
 
-interface ShopContextType {
-  cartItems: Record<number, number>;
-  addToCart: (itemId: number) => void;
-  removeFromCart: (itemId: number) => void;
-  updateCartItemCount: (newAmount: number, itemId: number) => void;
-  getTotalCartAmount: () => number;
-  setCartItems: React.Dispatch<React.SetStateAction<Record<number, number>>>;
-}
-
-export const ShopContext = createContext<ShopContextType>({
-  cartItems: {},
-  addToCart: () => {},
-  removeFromCart: () => {},
-  updateCartItemCount: () => {},
-  getTotalCartAmount: () => 0,
-  setCartItems: () => {},
-});
-
-export const useCart = () => useContext(ShopContext);
-
-const getDefaultCart = (): Record<number, number> => {
-  return {}; // Start with an empty cart
+type CartProduct = {
+  id: number;
+  quantity: number;
 };
 
-const CartContextProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [cartItems, setCartItems] = useState<Record<number, number>>(() => {
-    const savedCartItems = localStorage.getItem('cartItems');
-    if (savedCartItems) {
-      const parsedCart = JSON.parse(savedCartItems);
-      return Object.fromEntries(
-        Object.entries(parsedCart).filter(([key, value]) => 
-          products.some(product => product.id === Number(key)) && typeof value === 'number'
+type CartContextType = {
+  items: CartProduct[];
+  getProductQuantity: (id: number) => number;
+  addOneToCart: (id: number) => void;
+  removeOneFromCart: (id: number) => void;
+  deleteFromCart: (id: number) => void;
+  getTotalCost: () => number;
+};
+
+export const CartContext = createContext<CartContextType>({
+  items: [],
+  getProductQuantity: () => 0,
+  addOneToCart: () => {},
+  removeOneFromCart: () => {},
+  deleteFromCart: () => {},
+  getTotalCost: () => 0,
+});
+
+type CartProviderProps = {
+  children: ReactNode;
+};
+
+export function CartProvider({ children }: CartProviderProps) {
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
+
+  function getProductQuantity(id: number): number {
+    const quantity = cartProducts.find((product) => product.id === id)?.quantity;
+    return quantity ?? 0;
+  }
+
+  function addOneToCart(id: number): void {
+    const quantity = getProductQuantity(id);
+
+    if (quantity === 0) {
+      setCartProducts([
+        ...cartProducts,
+        {
+          id: id,
+          quantity: 1,
+        },
+      ]);
+    } else {
+      setCartProducts(
+        cartProducts.map((product) =>
+          product.id === id
+            ? { ...product, quantity: product.quantity + 1 }
+            : product
         )
-      ) as Record<number, number>;
+      );
     }
-    return getDefaultCart();
-  });
+  }
 
-  const { user } = useUser();
-  const [alertVisible, setAlertVisible] = useState(false);
-  const [alertMessage, setAlertMessage] = useState("");
+  function removeOneFromCart(id: number): void {
+    const quantity = getProductQuantity(id);
 
-  useEffect(() => {
-    if (!user) {
-      setCartItems(getDefaultCart());
+    if (quantity === 1) {
+      deleteFromCart(id);
+    } else {
+      setCartProducts(
+        cartProducts.map((product) =>
+          product.id === id
+            ? { ...product, quantity: product.quantity - 1 }
+            : product
+        )
+      );
     }
-  }, [user]);
+  }
 
-  useEffect(() => {
-    localStorage.setItem('cartItems', JSON.stringify(cartItems));
-  }, [cartItems]);
+  function deleteFromCart(id: number): void {
+    setCartProducts((cartProducts) =>
+      cartProducts.filter((currentProduct) => currentProduct.id !== id)
+    );
+  }
 
-  const getTotalCartAmount = (): number => {
-    return Object.entries(cartItems).reduce((total, [itemId, quantity]) => {
-      const itemInfo = products.find(product => product.id === Number(itemId));
-      return itemInfo ? total + itemInfo.price * quantity : total;
+  function getTotalCost(): number {
+    return cartProducts.reduce((totalCost, cartItem) => {
+      const productData = getProductData(cartItem.id);
+  
+      // Check if productData is found
+      if (!productData) {
+        // You could return 0, log an error, or handle it in another way
+        console.error(`Product with ID ${cartItem.id} not found.`);
+        return totalCost;
+      }
+  
+      return totalCost + productData.price * cartItem.quantity;
     }, 0);
-  };
+  }
 
-  const addToCart = (itemId: number): void => {
-    if (!user) {
-      setAlertMessage("You must be logged in to add items to the cart.");
-      setAlertVisible(true);
-      return;
-    }
-    setCartItems(prev => ({ ...prev, [itemId]: (prev[itemId] || 0) + 1 }));
-  };
-
-  const removeFromCart = (itemId: number): void => {
-    setCartItems(prev => {
-      const updatedCart = { ...prev, [itemId]: (prev[itemId] || 1) - 1 };
-      if (updatedCart[itemId] <= 0) delete updatedCart[itemId];
-      return updatedCart;
-    });
-  };
-
-  const updateCartItemCount = (newAmount: number, itemId: number): void => {
-    setCartItems(prev => {
-      const updatedCart = { ...prev, [itemId]: newAmount };
-      if (updatedCart[itemId] <= 0) delete updatedCart[itemId];
-      return updatedCart;
-    });
-  };
-
-  const contextValue: ShopContextType = {
-    cartItems,
-    addToCart,
-    removeFromCart,
-    updateCartItemCount,
-    getTotalCartAmount,
-    setCartItems,
+  const contextValue: CartContextType = {
+    items: cartProducts,
+    getProductQuantity,
+    addOneToCart,
+    removeOneFromCart,
+    deleteFromCart,
+    getTotalCost,
   };
 
   return (
-    <ShopContext.Provider value={contextValue}>
-      {children}
-      <Alert
-        message={alertMessage}
-        visible={alertVisible}
-        onClose={() => setAlertVisible(false)}
-      />
-    </ShopContext.Provider>
+    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
   );
-};
+}
 
-export default CartContextProvider;
+export default CartProvider;

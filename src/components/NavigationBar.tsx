@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import { NavLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -10,8 +10,8 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import { Badge } from "@mui/material";
 import { useTheme } from "../context/theme/ThemeContext";
-import { useCart } from "../context/cart-context";
 import { useUser } from "../context/user-context";
+import { CartContext } from "../context/cart-context";
 import Logo from "../../public/assets/images/Logo.jpg";
 
 const NavigationBar = () => {
@@ -19,14 +19,13 @@ const NavigationBar = () => {
   const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const { theme, toggleTheme } = useTheme();
-  const { cartItems, setCartItems } = useCart();
   const { user, setUser } = useUser();
+  const cart = useContext(CartContext); // Access CartContext
 
-  const cartItemCount = Object.values(cartItems).reduce((acc, count) => acc + count, 0);
+const productsCount=cart.items.reduce((sum,product)=>sum+product.quantity,0);
 
   const handleLogout = () => {
     setUser(null);
-    setCartItems({});
     // Add additional logout logic here, such as redirecting
   };
 
@@ -99,7 +98,7 @@ const NavigationBar = () => {
               className="px-2 py-2 rounded-md shadow hover:bg-gray-600"
               aria-label="View cart"
             >
-              <Badge badgeContent={cartItemCount} color="error">
+              <Badge color="error" badgeContent={productsCount}>
                 <ShoppingCartIcon className="dark:text-white" />
               </Badge>
             </NavLink>
@@ -149,83 +148,6 @@ const NavigationBar = () => {
               {navbarOpen ? <CloseIcon /> : <MenuIcon />}
             </button>
           </div>
-        </div>
-
-        {/* Mobile Menu */}
-        <div className={`transition-[max-height] duration-700 ease-in-out overflow-hidden ${navbarOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"} md:opacity-100 md:max-h-full md:hidden`}>
-          <ul className="flex flex-col items-center space-y-4 py-4">
-            {navItems.map((item) => (
-              <NavLink
-                key={item.label}
-                to={item.path}
-                className="text-black dark:text-white font-inter tracking-wider uppercase text-md whitespace-nowrap hover:underline"
-                aria-label={item.label}
-              >
-                {item.label}
-              </NavLink>
-            ))}
-            <div className="flex items-center space-x-2">
-              <form onSubmit={handleSearchSubmit} className="flex items-center space-x-2">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="px-4 py-2 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                <button
-                  type="submit"
-                  className="px-4 py-2 rounded-md shadow hover:bg-gray-600 dark:text-white"
-                  aria-label="Submit search"
-                >
-                  <SearchIcon />
-                </button>
-              </form>
-            </div>
-            <NavLink
-              to={"/cart"}
-              className="block px-4 py-2 text-center text-blue-600 rounded-md shadow hover:bg-gray-800"
-              aria-label="View cart"
-            >
-              <Badge badgeContent={cartItemCount} color="error">
-                <ShoppingCartIcon className="dark:text-white" />
-              </Badge>
-            </NavLink>
-            <button
-              onClick={toggleTheme}
-              className="block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800 dark:text-white"
-              aria-label="Toggle dark mode"
-            >
-              <DarkModeIcon />
-            </button>
-            {user ? (
-              <>
-                <NavLink
-                  to={"/dashboard"}
-                  className="flex items-center space-x-1 px-4 py-2 rounded-md shadow hover:bg-gray-800 dark:text-white"
-                  aria-label="Dashboard"
-                >
-                  <AccountCircleIcon />
-                  <span>{user.username}</span>
-                </NavLink>
-                <button
-                  onClick={handleLogout}
-                  className="block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800 dark:text-white"
-                  aria-label="Logout"
-                >
-                  <LogoutIcon />
-                </button>
-              </>
-            ) : (
-              <NavLink
-                to={"/login"}
-                className="block px-4 py-2 text-center rounded-md shadow hover:bg-gray-800 dark:text-white"
-                aria-label="Login"
-              >
-                <LoginIcon />
-              </NavLink>
-            )}
-          </ul>
         </div>
       </nav>
     </div>

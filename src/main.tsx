@@ -2,7 +2,6 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import {Elements} from '@stripe/react-stripe-js';
 import { loadStripe } from "@stripe/stripe-js";
-import store from "./redux/store.ts";
 import Home from "./pages/Home.tsx";
 import "./index.css";
 import Makeup from "./pages/Makeup.tsx";
@@ -11,7 +10,6 @@ import MedicalSupplies from "./pages/MedicalSupplies.tsx";
 import HouseholdItems from "./pages/HouseholdItems.tsx";
 import Tech from "./pages/Tech.tsx";
 import Login from "./pages/Login.tsx";
-import CartContextProvider from "./context/cart-context.tsx";
 import Cart from "./pages/Cart.tsx";
 import ProductDetails from "./pages/ProductDetails.tsx";
 import CreateAccount from "./pages/CreateAccount.tsx";
@@ -31,9 +29,7 @@ import Profile from "./pages/userDashboard/Profile.tsx";
 import EditProfile from "./pages/userDashboard/EditProfile.tsx";
 import OrderDetails from "./pages/userDashboard/OrderDetails.tsx";
 import PaymentDetails from "./pages/PaymentDetails.tsx";
-import { AuthProvider } from "./context/auth-context.tsx";
-import { Provider } from "react-redux";
-
+import CartProvider from "./context/cart-context.js";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -152,15 +148,19 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <Provider store={store}>
-  <AuthProvider>
-    <UserProvider>
-      <ThemeProvider>
-        <CartContextProvider>
-          <RouterProvider router={router} />
-        </CartContextProvider>
-      </ThemeProvider>
-    </UserProvider>
-  </AuthProvider>
-  </Provider>
+ 
+   <CartProvider>
+     <UserProvider>
+     
+
+    
+     <ThemeProvider>
+         <RouterProvider router={router} />
+      
+     </ThemeProvider>
+    
+   </UserProvider>
+   </CartProvider>
+  
+  
 );

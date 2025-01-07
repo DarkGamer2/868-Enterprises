@@ -7,7 +7,7 @@ import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import { useTheme } from '../context/theme/ThemeContext';
 import { Product, Style } from '../types';
-import { ShopContext } from '../context/cart-context';
+import { CartContext } from '../context/cart-context';
 import { useContext } from 'react';
 const ProductDetails: React.FC = () => {
   const { productId, styleId } = useParams<{ productId: string; styleId: string }>();
@@ -16,7 +16,7 @@ const ProductDetails: React.FC = () => {
   const [mainImage, setMainImage] = useState<string>('');
   const [additionalImages, setAdditionalImages] = useState<string[]>([]);
   const { theme } = useTheme();
-  const { addToCart } = useContext(ShopContext);
+  const { addOneToCart } = useContext(CartContext);
   useEffect(() => {
     const selectedProduct = products.find((p) => p.id === parseInt(productId!));
 
@@ -107,7 +107,7 @@ const ProductDetails: React.FC = () => {
             </span>
 
             <div>
-              <button onClick={() => addToCart(parseInt(productId!))}
+              <button onClick={() => addOneToCart(parseInt(productId!))}
                 className={`px-3 py-2 text-white rounded-md mt-2 ${isInStock ? 'bg-blue-500' : 'bg-gray-500 cursor-not-allowed'}`} 
                 disabled={!isInStock}
               >

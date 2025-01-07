@@ -9,7 +9,7 @@ export const styleKeys = {
 } as const;
 
 
-export const products:Product[] = [
+const  products:Product[] = [
   {
     itemName: "Usha Glow Shimmer Spray",
     productDescription: "A complete set of high-quality makeup essentials.",
@@ -166,3 +166,16 @@ inStock: true,
 //     category: "makeup",
 //   },
 ];
+
+function getProductData(id:Number){
+  let productData=products.find(product=>product.id===id)
+
+  if(productData===undefined){
+    console.log("Product data does not exist for id: "+id)
+    return undefined
+  }
+
+  return productData;
+}
+
+export {products,getProductData}
