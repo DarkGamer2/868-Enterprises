@@ -136,7 +136,7 @@ inStock: true,
       "assets/products/Images/black_lash/Screenshot_20240820_142246_Chrome",
       "assets/products/Images/black_lash/Screenshot_20240820_142256_Chrome",
     ],
-    id:"17",
+    id: "price_1Qee64HW5YE4EViBgrjRpekh",
     category:"accessories",
     styles:{
       default:{
