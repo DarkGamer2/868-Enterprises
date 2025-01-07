@@ -5,6 +5,7 @@ import NavigationBar from '../components/NavigationBar';
 import Footer from '../components/Footer';
 import { useTheme } from '../context/theme/ThemeContext';
 import { products } from '../Data/products';
+import axios from 'axios';
 
 const Cart = () => {
   const cart = useContext(CartContext); // Access the CartContext
@@ -12,6 +13,55 @@ const Cart = () => {
 
   const hasItemsInCart = cart.items.length > 0; // Check if there are items in the cart
   const totalAmount = cart.getTotalCost(); // Calculate total cost
+
+  // Fetch CSRF token
+  const getCsrfToken = async (): Promise<string> => {
+    try {
+      const response = await axios.get(
+        "https://868-enterprises-api-production.up.railway.app/api/csrf-token",
+        { withCredentials: true } // Include credentials to receive cookies
+      );
+      return response.data.csrfToken; // Extract and return the CSRF token
+    } catch (error) {
+      console.error("Error fetching CSRF token:", error);
+      throw new Error("Failed to fetch CSRF token.");
+    }
+  };
+
+  // Handle the checkout process with CSRF token
+  const handleCheckout = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    try {
+      // Get CSRF token
+      const csrfToken = await getCsrfToken();
+
+      // Make checkout request
+      const response = await axios.post(
+        "https://868-enterprises-api-production.up.railway.app/api/checkout", 
+        { items: cart.items },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken, // Add CSRF token to the header
+          },
+          withCredentials: true, // Ensure cookies are sent along with the request
+        }
+      );
+
+      const data = response.data;
+      if (data.url) {
+        window.location.href = data.url; // Redirect to the provided URL if available
+      }
+    } catch (error: any) {
+      console.error("Checkout error:", error);
+      if (error.response) {
+        console.error("Server responded with:", error.response.status, error.response.data);
+      } else {
+        console.error("Error message:", error.message);
+      }
+    }
+  };
 
   return (
     <div
@@ -77,6 +127,14 @@ const Cart = () => {
               }`}
             >
               Sub Total: ${totalAmount.toFixed(2)}
+            </div>
+            <div>
+              <button 
+                className="text-sm font-bold text-white bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                onClick={handleCheckout}
+              >
+                Checkout
+              </button>
             </div>
           </div>
         )}

@@ -6,7 +6,7 @@ type CartItemProps = {
   productImage: string;
   productName: string;
   productPrice: number;
-  productID: number;
+  productID: string;
   onAdd: () => void;
   onRemove: () => void;
   onUpdate: (newAmount: number) => void;

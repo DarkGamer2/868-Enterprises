@@ -16,7 +16,7 @@ const  products:Product[] = [
     itemImage:
       "/assets/products/Images/F288F213-4892-42E6-B4FD-D23266E11375.JPG",
     price: 70.0,
-    id: 3,
+   id: "price_1QecNsHW5YE4EViBmmMG7TWF",
     category: "makeup",
     inStock: true,
     styles: {
@@ -121,7 +121,7 @@ inStock: true,
       },
     },
     price: 150.0,
-    id: 16,
+    id: "price_1QeLreHW5YE4EViB9RDdiWvU",
     category: "household",
   },
   {
@@ -136,7 +136,7 @@ inStock: true,
       "assets/products/Images/black_lash/Screenshot_20240820_142246_Chrome",
       "assets/products/Images/black_lash/Screenshot_20240820_142256_Chrome",
     ],
-    id:17,
+    id:"17",
     category:"accessories",
     styles:{
       default:{
@@ -167,7 +167,7 @@ inStock: true,
 //   },
 ];
 
-function getProductData(id:Number){
+function getProductData(id:string){
   let productData=products.find(product=>product.id===id)
 
   if(productData===undefined){

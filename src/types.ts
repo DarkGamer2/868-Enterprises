@@ -10,7 +10,7 @@ export interface Style {
 }
 
 export interface Product {
-  id: number;
+  id: string;
   itemName: string;
   itemImage: string;
   price: number;

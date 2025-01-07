@@ -7,7 +7,7 @@ interface ProductProps {
   productName: string;
   productImage: string;
   productPrice: string;
-  productID: number;
+  productID: string;
   styleID: string; // Add this prop to handle style-specific navigation
 }
 
