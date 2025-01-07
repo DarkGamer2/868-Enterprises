@@ -1,8 +1,8 @@
-import Image1 from "../../public/assets/images/360_F_334796865_VVTjg49nbLgQPG6rgKDjVqSb5XUhBVsW.jpg";
-import Image2 from "../../public/assets/images/SNY04089.jpg_edit.width-1440_05001m7uKQ0crRoI.jpg";
-import Image3 from "../../public/assets/images/clothingrack.0.jpg";
-import Image4 from "../../public/assets/images/enjoy-retro-clothing-truro-20-scaled.jpg";
-import Image5 from "../../public/assets/images/index-online-65a1812dc7346.jpg";
+import Image1 from "/assets/images/360_F_334796865_VVTjg49nbLgQPG6rgKDjVqSb5XUhBVsW.jpg";
+import Image2 from "/assets/images/SNY04089.jpg_edit.width-1440_05001m7uKQ0crRoI.jpg";
+import Image3 from "/assets/images/clothingrack.0.jpg";
+import Image4 from "/assets/images/enjoy-retro-clothing-truro-20-scaled.jpg";
+import Image5 from "/assets/images/index-online-65a1812dc7346.jpg";
 import { useState, useEffect } from "react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
