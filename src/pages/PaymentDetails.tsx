@@ -1,7 +1,7 @@
 import Footer from "../components/Footer";
 import NavigationBar from "../components/NavigationBar";
 import { useTheme } from "../context/theme/ThemeContext";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
 
 const PaymentDetails = () => {
