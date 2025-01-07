@@ -14,7 +14,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get('http://localhost:4900/api/users/me', {
+        const response = await axios.get('https://868-enterprises-api-production.up.railway.app/api/users/me', {
           withCredentials: true,
         });
         setUser({ username: response.data.username });

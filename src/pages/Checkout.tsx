@@ -27,7 +27,7 @@ export default function CheckoutPage() {
     // Create a payment intent on component mount
     axios
       .post(
-        'http://localhost:4900/api/create-payment-intent',
+        'https://868-enterprises-api-production.up.railway.app/api/create-payment-intent',
         { amount: 1000 },
         // { headers: { 'x-csrf-token': csrfToken } } // Adding CSRF token to headers
       )

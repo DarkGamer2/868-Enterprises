@@ -8,7 +8,7 @@ const OrderDetails = () => {
 
   const fetchOrderDetails = async () => {
     try {
-      const response = await axios.get(`http://localhost:4900/api/orders/${orderId}`, {
+      const response = await axios.get(`https://868-enterprises-api-production.up.railway.app/api/orders/${orderId}`, {
         withCredentials: true,
       });
       setOrderDetails(response.data);

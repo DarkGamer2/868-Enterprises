@@ -19,7 +19,7 @@ const Profile: React.FC = () => {
 
     const getProfileData = async () => {
         try {
-            const response = await axios.get('http://localhost:4900/api/users/profile');
+            const response = await axios.get('https://868-enterprises-api-production.up.railway.app/api/users/profile');
             setProfileData(response.data);
         } catch (error) {
             console.error('Error fetching profile data', error);
