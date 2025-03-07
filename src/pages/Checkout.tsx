@@ -33,7 +33,7 @@ export default function CheckoutForm() {
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await axios.get("http://localhost:4900/api/csrf-token", { withCredentials: true });
+        const response = await axios.get("https://868-enterprises-api-production.up.railway.app/api/csrf-token", { withCredentials: true });
         setCsrfToken(response.data.csrfToken);
       } catch (error) {
         console.error("Failed to fetch CSRF token:", error);
@@ -49,7 +49,7 @@ export default function CheckoutForm() {
     const selectedCity = event.target.value;
     setFormData({ ...formData, location: selectedCity });
     try {
-      const response = await axios.post("http://localhost:4900/api/get-delivery-fee", { city: selectedCity });
+      const response = await axios.post("https://868-enterprises-api-production.up.railway.app/api/get-delivery-fee", { city: selectedCity });
       cart.updateDeliveryFee(response.data.deliveryFee);
     } catch (error) {
       console.error("Error fetching delivery fee:", error);
@@ -74,7 +74,7 @@ export default function CheckoutForm() {
 
     try {
       const response = await axios.post(
-        "http://localhost:4900/api/checkout",
+        "https://868-enterprises-api-production.up.railway.app/api/checkout",
         { items: cart.items, ...formData },
         { headers: { "X-CSRF-Token": csrfToken, "Content-Type": "application/json" }, withCredentials: true }
       );

@@ -13,7 +13,7 @@ const PaymentForm = () => {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: 'http://localhost:5173/success',
+        return_url: 'https://868-enterprises-api-production.up.railway.app/success',
       },
     });
 

@@ -41,7 +41,7 @@ export function CartProvider({ children }: CartProviderProps) {
 
   async function updateDeliveryFee(location: string) {
     try {
-      const response = await axios.post("http://localhost:4900/api/delivery-fee", { city: location });
+      const response = await axios.post("https://868-enterprises-api-production.up.railway.app/api/delivery-fee", { city: location });
       setDeliveryFee(response.data.deliveryFee);
     } catch (error) {
       console.error("Error fetching delivery fee:", error);

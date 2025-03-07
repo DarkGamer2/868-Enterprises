@@ -1,5 +1,4 @@
-import React, { createContext, useState, useContext, useEffect, ReactNode } from 'react';
-import axios from 'axios';
+import React, { createContext, useState, useContext,ReactNode } from 'react';
 
 interface UserContextType {
   user: { username: string } | null;
@@ -11,20 +10,20 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<{ username: string } | null>(null);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('https://868-enterprises-api-production.up.railway.app/api/users/me', {
-          withCredentials: true,
-        });
-        setUser({ username: response.data.username });
-      } catch (error) {
-        console.error('Error fetching user:', error);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await axios.get('https://868-enterprises-api-production.up.railway.app/api/users/me', {
+  //         withCredentials: true,
+  //       });
+  //       setUser({ username: response.data.username });
+  //     } catch (error) {
+  //       console.error('Error fetching user:', error);
+  //     }
+  //   };
 
-    fetchUser();
-  }, []);
+  //   fetchUser();
+  // }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>

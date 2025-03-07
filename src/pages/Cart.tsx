@@ -24,7 +24,7 @@ const Cart = () => {
   useEffect(() => {
     const fetchCsrfToken = async () => {
       try {
-        const response = await axios.get("http://localhost:4900/api/csrf-token", { withCredentials: true });
+        const response = await axios.get("https://868-enterprises-api-production.up.railway.app/api/csrf-token", { withCredentials: true });
         setCsrfToken(response.data.csrfToken);
       } catch (error) {
         console.error("Failed to fetch CSRF token:", error);

@@ -14,7 +14,7 @@ const PaymentDetails = () => {
 
     const handlePayment = async (e: React.MouseEvent) => {
         e.preventDefault();
-        await axios.post("https://localhost:3000/payment", {
+        await axios.post("https://868-enterprises-api-production.up.railway.app/payment", {
             fullName: fullName,
             creditCardNumber: creditCardNumber,
             expirationDate: expirationDate,
