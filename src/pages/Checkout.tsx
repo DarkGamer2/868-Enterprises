@@ -7,7 +7,7 @@ import NavigationBar from "../components/NavigationBar";
 import { useTheme } from "../context/theme/ThemeContext";
 import Footer from "../components/Footer";
 
-const stripePromise = loadStripe("your-stripe-public-key");
+const stripePromise = loadStripe("your-stripe-public-key"); // Replace with your actual Stripe public key
 
 const steps = [
   { title: "YOUR INFO" },
@@ -58,7 +58,7 @@ export default function CheckoutForm() {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    const stripe = await stripePromise;
+    const stripe = await stripePromise; // Use stripePromise to get the Stripe object
 
     const mobileNumberRegex = /^[0-9]{10}$/;
     if (!mobileNumberRegex.test(formData.mobileNumber)) {
@@ -79,7 +79,18 @@ export default function CheckoutForm() {
         { headers: { "X-CSRF-Token": csrfToken, "Content-Type": "application/json" }, withCredentials: true }
       );
       if (response.data.url) {
+        // Redirect the user to the Stripe Checkout page
         window.location.href = response.data.url;
+      } else if (response.data.sessionId) {
+          //using stripe client side redirect.
+          const result = await stripe!.redirectToCheckout({
+          sessionId: response.data.sessionId,
+        });
+
+        if (result.error) {
+          console.error(result.error);
+        }
+
       }
     } catch (error) {
       console.error("Checkout error:", error);
@@ -143,7 +154,7 @@ export default function CheckoutForm() {
             )}
             <div className="flex justify-between mt-6">
               {step > 0 && <button className="bg-gray-300 text-black px-4 py-2 rounded hover:bg-gray-400 dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white" onClick={prevStep}>Go Back</button>}
-              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none" onClick={nextStep}>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-60   focus:outline-none" onClick={nextStep}>
                 {step === steps.length - 1 ? "Confirm" : "Next Step"}
               </button>
             </div>

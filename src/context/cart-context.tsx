@@ -55,17 +55,26 @@ export function CartProvider({ children }: CartProviderProps) {
   function addOneToCart(id: string): void {
     setCartProducts((prev) => {
       const exists = prev.find((product) => product.id === id);
-      const productData = getProductData(id); // Fetch product details
-  
-      if (!productData) return prev; // Ensure product data is valid
-  
+      const productData = getProductData(id);
+
+      if (!productData) return prev;
+
       return exists
         ? prev.map((product) =>
             product.id === id ? { ...product, quantity: product.quantity + 1 } : product
           )
-        : [...prev, { id, quantity: 1, name: productData.itemName, price: productData.price }];
+        : [
+            ...prev,
+            {
+              id,
+              quantity: 1,
+              itemName: productData.itemName, // Use itemName from productData
+              price: productData.price,
+            },
+          ];
     });
   }
+
   function removeOneFromCart(id: string): void {
     setCartProducts((prev) =>
       prev.map((product) =>
@@ -84,6 +93,7 @@ export function CartProvider({ children }: CartProviderProps) {
       return productData ? totalCost + productData.price * cartItem.quantity : totalCost;
     }, deliveryFee);
   }
+
   const contextValue: CartContextType = {
     items: cartProducts,
     getProductQuantity,
