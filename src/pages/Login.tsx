@@ -27,7 +27,7 @@ const Login = () => {
       async function getCsrfToken(): Promise<string> {
         try {
           const response = await axios.get(
-            "https://868-enterprises-api-production.up.railway.app/api/csrf-token",
+            "http://localhost:4900/api/csrf-token",
             { withCredentials: true } // Include credentials to receive cookies
           );
           return response.data.csrfToken; // Extract and return the CSRF token
@@ -40,7 +40,7 @@ const Login = () => {
 
       console.log("Sending login request with:", { email, password });
       const response = await axios.post(
-        "https://868-enterprises-api-production.up.railway.app/api/users/login",
+        "http://localhost:4900/api/users/login",
         { email, password },
         {
           withCredentials: true,

@@ -33,15 +33,15 @@ const Footer = () => {
             Contact Information
           </h1>
           <p className="text-white text-center font-lato">
-            Email: 868@example.com
+            Email: Mewzaline.est92@gmail.com
           </p>
           <p className="text-white text-center font-lato">
-            Phone: +1 (868) 555-6241
+            Phone: +1 (868)  463-6023
           </p>
           <div className="flex justify-center mt-2">
-            <InstagramIcon className="text-pink-500 mx-2" />
+            <Link to="https://www.instagram.com/mewzaline.est.92?igsh=MWd3emNiZ2d5cTMx"><InstagramIcon className="text-pink-500 mx-2" /></Link>
             <WhatsAppIcon className="text-green-500 mx-2" />
-            <FacebookIcon className="text-blue-500 mx-2" />
+           <Link to="https://www.facebook.com/share/1HAHtTP4Ee/"> <FacebookIcon className="text-blue-500 mx-2" />  </Link>
             <XIcon className="text-black mx-2" />
           </div>
         </div>

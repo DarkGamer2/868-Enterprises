@@ -30,6 +30,7 @@ import EditProfile from "./pages/userDashboard/EditProfile.tsx";
 import OrderDetails from "./pages/userDashboard/OrderDetails.tsx";
 import PaymentDetails from "./pages/PaymentDetails.tsx";
 import CartProvider from "./context/cart-context.js";
+import CheckoutForm from "./pages/Checkout.tsx"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -145,6 +146,10 @@ const router = createBrowserRouter([
     path: "/payment",
     element: <PaymentDetails />,
   },
+  {
+    path: "/checkout-form",
+    element: <CheckoutForm />,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
