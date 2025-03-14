@@ -12,23 +12,23 @@ export interface Style {
 export interface Product {
   id: string;
   itemName: string;
-  itemImage: string;
+  image: string; // Changed from itemImage to image
   price: number;
-  inStock: boolean; // This should also be non-optional
+  inStock: boolean;
   productDescription: string;
   productDescription2?: string;
-  dimensions?: string; // Product level dimensions
+  dimensions?: string;
   category: string;
   additionalImages?: string[];
-
   styles: {
-    default: Style; // Make default style required
-    style1?: Style; // Make additional styles optional
+    default: Style;
+    style1?: Style;
     style2?: Style;
     style3?: Style;
-    additionalStyles?: Style[]; // Optional additional styles
+    additionalStyles?: Style[];
   };
 }
+
 
 export interface User {
   username: string;

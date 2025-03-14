@@ -2,16 +2,19 @@ import { createContext, useState, ReactNode } from "react";
 import { getProductData } from "../Data/products";
 
 type CartProduct = {
-  id: string; // Changed to string
+  id: string;
   quantity: number;
+  itemName: string;
+  price: number;
+  image: string; // Add image URL
 };
 
 type CartContextType = {
   items: CartProduct[];
-  getProductQuantity: (id: string) => number; // Changed to string
-  addOneToCart: (id: string) => void; // Changed to string
-  removeOneFromCart: (id: string) => void; // Changed to string
-  deleteFromCart: (id: string) => void; // Changed to string
+  getProductQuantity: (id: string) => number;
+  addOneToCart: (id: string) => void;
+  removeOneFromCart: (id: string) => void;
+  deleteFromCart: (id: string) => void;
   getTotalCost: () => number;
 };
 
@@ -31,73 +34,51 @@ type CartProviderProps = {
 export function CartProvider({ children }: CartProviderProps) {
   const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
 
-  // Updated to expect a string for id
   function getProductQuantity(id: string): number {
-    const quantity = cartProducts.find((product) => product.id === id)?.quantity;
-    return quantity ?? 0;
+    return cartProducts.find((product) => product.id === id)?.quantity ?? 0;
   }
 
-  // Updated to expect a string for id
   function addOneToCart(id: string): void {
-    const quantity = getProductQuantity(id);
+    setCartProducts((prev) => {
+      const exists = prev.find((product) => product.id === id);
+      const productData = getProductData(id); // Fetch product details
 
-    if (quantity === 0) {
-      setCartProducts([
-        ...cartProducts,
-        {
-          id: id,
-          quantity: 1,
-        },
-      ]);
-    } else {
-      setCartProducts(
-        cartProducts.map((product) =>
-          product.id === id
-            ? { ...product, quantity: product.quantity + 1 }
-            : product
-        )
-      );
-    }
+      if (!productData) return prev; // Ensure product data is valid
+
+      return exists
+        ? prev.map((product) =>
+            product.id === id ? { ...product, quantity: product.quantity + 1 } : product
+          )
+        : [
+            ...prev,
+            {
+              id,
+              quantity: 1,
+              itemName: productData.itemName,
+              price: productData.price,
+              image: productData.image, // Include image URL
+            },
+          ];
+    });
   }
 
-  // Updated to expect a string for id
   function removeOneFromCart(id: string): void {
-    const quantity = getProductQuantity(id);
-
-    if (quantity === 1) {
-      deleteFromCart(id);
-    } else {
-      setCartProducts(
-        cartProducts.map((product) =>
-          product.id === id
-            ? { ...product, quantity: product.quantity - 1 }
-            : product
-        )
-      );
-    }
-  }
-
-  // Updated to expect a string for id
-  function deleteFromCart(id: string): void {
-    setCartProducts((cartProducts) =>
-      cartProducts.filter((currentProduct) => currentProduct.id !== id)
+    setCartProducts((prev) =>
+      prev.map((product) =>
+        product.id === id ? { ...product, quantity: Math.max(product.quantity - 1, 0) } : product
+      )
     );
   }
 
-  // Updated to expect a string for id and handle product data correctly
+  function deleteFromCart(id: string): void {
+    setCartProducts((prev) => prev.filter((product) => product.id !== id));
+  }
+
   function getTotalCost(): number {
     return cartProducts.reduce((totalCost, cartItem) => {
       const productData = getProductData(cartItem.id);
-
-      // Check if productData is found
-      if (!productData) {
-        // You could return 0, log an error, or handle it in another way
-        console.error(`Product with ID ${cartItem.id} not found.`);
-        return totalCost;
-      }
-
-      return totalCost + productData.price * cartItem.quantity;
-    }, 0);
+      return productData ? totalCost + productData.price * cartItem.quantity : totalCost;
+    }, 0); // Removed deliveryFee
   }
 
   const contextValue: CartContextType = {
@@ -109,9 +90,7 @@ export function CartProvider({ children }: CartProviderProps) {
     getTotalCost,
   };
 
-  return (
-    <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>
-  );
+  return <CartContext.Provider value={contextValue}>{children}</CartContext.Provider>;
 }
 
 export default CartProvider;
