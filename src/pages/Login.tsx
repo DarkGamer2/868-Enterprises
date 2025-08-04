@@ -9,42 +9,43 @@ import { useUser } from "../context/user-context";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const { theme } = useTheme();
   const { setUser } = useUser();
 
+  // Function to fetch CSRF token
+  const getCsrfToken = async (): Promise<string | null> => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/api/csrf-token", { withCredentials: true });
+      return response.data.csrfToken || null;
+    } catch (error) {
+      console.error("Error fetching CSRF token", error);
+      return null; // If fetching CSRF token fails, return null
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Correct implementation to only fetch CSRF token
 
-
+    // Fetch CSRF token first
+    const csrfToken = await getCsrfToken();
+    if (!csrfToken) {
+      setError("Failed to retrieve CSRF token.");
+      return;
+    }
 
     try {
-      // Fetch CSRF token
-      async function getCsrfToken(): Promise<string> {
-        try {
-          const response = await axios.get(
-            "http://localhost:4900/api/csrf-token",
-            { withCredentials: true } // Include credentials to receive cookies
-          );
-          return response.data.csrfToken; // Extract and return the CSRF token
-        } catch (error) {
-          console.error("Error fetching CSRF token", error);
-          throw new Error("Failed to fetch CSRF token.");
-        }
-      }
-      const csrfToken = await getCsrfToken();
-
       console.log("Sending login request with:", { email, password });
+
+      // Make the login request
       const response = await axios.post(
-        "http://localhost:4900/api/users/login",
+        "http://127.0.0.1:8000/api/users/login",
         { email, password },
         {
           withCredentials: true,
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
             "X-CSRF-Token": csrfToken,
           },
@@ -55,6 +56,8 @@ const Login = () => {
         console.log("Login successful:", response.data);
         setUser({ username: response.data.username });
         navigate("/");
+      } else {
+        setError("Invalid credentials, please try again.");
       }
     } catch (err) {
       console.error("Error during login:", err);

@@ -44,3 +44,21 @@ export interface UserContextType {
 
 }
 
+export interface TrackingEvent {
+  status: string; // e.g., "Ordered", "Shipped", "Out for delivery", "Delivered"
+  date: string;  // Date of the event
+  location?: string; // Optional location (if available)
+}
+
+interface OrderTracking {
+  orderId: string;
+  arrivalDate: string;
+  currentStatus: string; // Current overall status
+  trackingEvents: TrackingEvent[];
+  mapLocation?: {
+    latitude: number;
+    longitude: number;
+    address: string;
+  };
+}
+

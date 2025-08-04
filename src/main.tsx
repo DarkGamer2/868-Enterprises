@@ -32,6 +32,7 @@ import CartProvider from "./context/cart-context.js";
 import CheckoutForm from "./pages/Checkout.tsx"
 import Products from "./pages/userDashboard/Products.tsx";
 import { AuthProvider } from "./context/auth-context.tsx";
+import Tracking from "./pages/Tracking.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import AddProductWrapper from "./components/AddProductWrapper.tsx";
 const router = createBrowserRouter([
@@ -163,17 +164,21 @@ const router = createBrowserRouter([
   {
     path:"/products",
     element:<Products/>
+  },
+  {
+    path: "/tracking",
+    element:<Tracking/>
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <CartProvider>
-    {/* <UserProvider> */}
+    <UserProvider>
       <ThemeProvider>
-        <AuthProvider> {/* Corrected placement: AuthProvider inside ThemeProvider */}
+        {/* <AuthProvider> */}
           <RouterProvider router={router} />
-        </AuthProvider>
+        {/* </AuthProvider> */}
       </ThemeProvider>
-    {/* </UserProvider> */}
+    </UserProvider>
   </CartProvider>
 );
