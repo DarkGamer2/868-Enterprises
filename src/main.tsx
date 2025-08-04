@@ -17,7 +17,6 @@ import Logout from "./components/Logout.tsx";
 import { ThemeProvider } from "./context/theme/ThemeContext.tsx";
 import Error from "./components/Error.tsx";
 import Dashboard from "./pages/userDashboard/Dashboard.tsx";
-import AddProduct from "./pages/userDashboard/AddProduct.tsx";
 import Contact from "./pages/Contact.tsx";
 import Orders from "./pages/userDashboard/Orders.tsx";
 import Confirmation from "./pages/Confirmation.tsx";
@@ -31,6 +30,10 @@ import OrderDetails from "./pages/userDashboard/OrderDetails.tsx";
 import PaymentDetails from "./pages/PaymentDetails.tsx";
 import CartProvider from "./context/cart-context.js";
 import CheckoutForm from "./pages/Checkout.tsx"
+import Products from "./pages/userDashboard/Products.tsx";
+import { AuthProvider } from "./context/auth-context.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import AddProductWrapper from "./components/AddProductWrapper.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -89,9 +92,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/addProduct",
-    element: <AddProduct />,
+    element: (
+      <ProtectedRoute>
+        <AddProductWrapper />
+      </ProtectedRoute>
+    ),
     errorElement: <Error />,
   },
+  
   {
     path: "/contact",
     element: <Contact />,
@@ -123,7 +131,9 @@ const router = createBrowserRouter([
   },
   {
     path: "dashboard",
-    element: <Dashboard />,
+    element:<ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>
   },
   {
     path: "*", // Wildcard route to catch all undefined paths at the end
@@ -149,23 +159,21 @@ const router = createBrowserRouter([
   {
     path: "/checkout-form",
     element: <CheckoutForm />,
+  },
+  {
+    path:"/products",
+    element:<Products/>
   }
 ]);
 
-ReactDOM.createRoot(document.getElementById("root")!).render(
- 
-   <CartProvider>
-     <UserProvider>
-     
-
-    
-     <ThemeProvider>
-         <RouterProvider router={router} />
-      
-     </ThemeProvider>
-    
-   </UserProvider>
-   </CartProvider>
-  
-  
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <CartProvider>
+    {/* <UserProvider> */}
+      <ThemeProvider>
+        <AuthProvider> {/* Corrected placement: AuthProvider inside ThemeProvider */}
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </ThemeProvider>
+    {/* </UserProvider> */}
+  </CartProvider>
 );

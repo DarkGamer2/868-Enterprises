@@ -3,7 +3,7 @@ import Sidebar from "../../components/Sidebar";
 import axios from "axios";
 import { useState,useEffect } from "react";
 import Order from "../../components/Order";
-
+import { useTheme } from "../../context/theme/ThemeContext";
 interface Order {
   accountName: string;
   products: Array<string>;
@@ -12,6 +12,7 @@ interface Order {
 }
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const { theme } = useTheme();
   const API_URL = "https://868-enterprises-api-production.up.railway.app";
   const fetchOrders = async () => {
     await axios
@@ -26,12 +27,16 @@ const Orders = () => {
   }, []);
   
   return (
-    <div>
-      <NavigationBar />
-      <Sidebar />
-      <section>
-        <p className="text-center">Your Orders</p>
-        return (
+    <div className={`${theme==="dark"?"dark":"light"}`}>
+    <div className="dark:bg-black bg-white">
+    <NavigationBar />
+    <div className="flex">
+   <div>
+   <Sidebar />
+   </div>
+      <div>
+      <section className="">
+        <p className="text-center dark:text-white text-black">Your Orders</p>
           <div>
             {orders.map((order: Order) => {
               return (
@@ -44,8 +49,10 @@ const Orders = () => {
               );
             })}
           </div>
-        );
       </section>
+      </div>
+    </div>
+    </div>
     </div>
   );
 };
